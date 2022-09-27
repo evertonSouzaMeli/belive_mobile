@@ -7,14 +7,14 @@ import Constants from 'expo-constants';
 export default function Home({ navigation }) {
   const [nome, setNome] = useState("");
 
-  useEffect(()=>{
-      async function recoveryData() {
+ /* useEffect(()=>{
+    async function recoveryData() {
           let response = await AsyncStorage.getItem('userData');
           let json = JSON.parse(response);
           setNome(json.nome);
       }
       recoveryData();
-    },[]);
+    },[]); */
 
   return (
     <View style={styles.container}>
