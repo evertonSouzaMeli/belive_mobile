@@ -9,33 +9,28 @@ export default function Chatbot() {
     const [texto, setTexto] = useState("")
     const [resposta, setResposta] = useState("")
 
-
-    const enviarTextoParaChatbot = () => {
-        alert("Texto enviado para IBM Watson")
-    }
     const key = "PJzIsPSS51vZx8VoQLdwyuXXvOZZd52uOUBp1KWmyZTu"
     const encodedKey = base64.encode(`apikey:${key}`)
-    useEffect(() => { 
-        axios
-            .post(
-                `https://api.us-south.assistant.watson.cloud.ibm.com/instances/11a13d07-78ef-4242-89cc-782d5bd13ceb/v1/workspaces/2f75e230-f055-4276-a75b-b2c2ae8ba53a/message`,
-                {
-                    input: { text: "hello world" },
+
+    const enviarTextoParaChatbot = () => {
+        axios.post(
+            `https://api.us-south.assistant.watson.cloud.ibm.com/instances/11a13d07-78ef-4242-89cc-782d5bd13ceb/v1/workspaces/2f75e230-f055-4276-a75b-b2c2ae8ba53a/message?version=2018-09-20`,
+            {input: {text: "Olá"}},
+            {
+                headers: {
+                    Authorization: `Basic ${encodedKey}`,
+                    'Content-Type': 'application/json',
                 },
-                {
-                    headers: {
-                        Authorization: `Basic ${encodedKey}`,
-                        'Content-Type': 'application/json',
-                    },
-                },
-            )
+            },
+        )
             .then((res) => {
-                console.log(res.data);
+                setResposta(res.data.output.text)
             })
             .catch((err) => {
-                console.error(err);
+                alert(err)
             });
-    },[])
+    }
+
     return (
         <View style={{ display: 'flex', flexDirection: 'row' }}>
             <View>
