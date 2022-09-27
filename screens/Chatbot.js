@@ -15,7 +15,7 @@ export default function Chatbot() {
     const enviarTextoParaChatbot = () => {
         axios.post(
             `https://api.us-south.assistant.watson.cloud.ibm.com/instances/11a13d07-78ef-4242-89cc-782d5bd13ceb/v1/workspaces/2f75e230-f055-4276-a75b-b2c2ae8ba53a/message?version=2018-09-20`,
-            {input: {text: "Olá"}},
+            {input: {text: texto}},
             {
                 headers: {
                     Authorization: `Basic ${encodedKey}`,
