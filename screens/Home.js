@@ -1,35 +1,69 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-import {Button, Text, View, StyleSheet, AsyncStorage} from 'react-native';
-import Constants from 'expo-constants';
+import { Text, View } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+import Perfil from './Perfil';
 
-export default function Home({ navigation }) {
-  const [nome, setNome] = useState("");
+const Tab = createBottomTabNavigator();
 
-  useEffect(()=>{
-      async function recoveryData() {
-          let response = await AsyncStorage.getItem('userData');
-          let json = JSON.parse(response);
-          setNome(json.nome);
-      }
-      recoveryData();
-    },[]);
-
-  return (
-    <View style={styles.container}>
-      <Text>Seja bem vindo {nome}</Text>
-      <Button title="Perfil" onPress={ () => { navigation.navigate("Perfil") }} />
-    </View>
-  );
+function Feed() {
+    return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text>Campo destinado a pagina Home!</Text>
+        </View>
+    );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
-    padding: 8,
-  }
-});
+function Chat() {
+    return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text>Campo destinado ao ChatBot!</Text>
+        </View>
+    );
+}
+
+
+export default function Home() {
+    return (
+        <Tab.Navigator
+            initialRouteName="Home"
+            screenOptions={{
+                tabBarActiveTintColor: '#e91e63',
+            }}
+        >
+            <Tab.Screen
+                name="Home"
+                component={Feed}
+                options={{
+                    tabBarLabel: 'Home',
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons name="home" color={color} size={size} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="Chat"
+                component={Chat}
+                options={{
+                    tabBarLabel: 'Chat',
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons name="message" color={color} size={size} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="Perfil"
+                component={Perfil}
+                options={{
+                    tabBarLabel: 'Perfil',
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons name="account" color={color} size={size} />
+                    ),
+                }}
+            />
+        </Tab.Navigator>
+    );
+}
+
+
