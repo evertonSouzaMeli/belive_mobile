@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import {Button, Text, View, StyleSheet, TextInput, AsyncStorage} from 'react-native';
 import Constants from 'expo-constants';
 import base64 from 'react-native-base64';
+import { speechToText } from '../components/SpeechToText';
 import axios from 'axios';
 
 export default function Chatbot() {
@@ -36,6 +37,9 @@ export default function Chatbot() {
             <View>
                 <TextInput style={{ margin: 5, backgroundColor: 'white', borderColor: 'blue', borderWidth: 3 }} placeholderTextColor={"Entre com texto"} value={texto}  onChangeText={ value => { setTexto(value) }} />
                 <Button title={"Enviar"} onPress={ () => { enviarTextoParaChatbot() }} />
+            </View>
+            <View>
+                <Button title={"Enviar audio para chatbot"} onPress={() => { speechToText() } } />
             </View>
             <View>
                 <TextInput style={{ margin: 5, backgroundColor: 'white', borderColor: 'green', borderWidth: 3 }}  placeholderTextColor={"Entre com texto"}  value={resposta}/>
