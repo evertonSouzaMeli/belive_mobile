@@ -3,8 +3,9 @@ import {useEffect, useState} from 'react';
 import {Button, Text, View, StyleSheet, TextInput, AsyncStorage} from 'react-native';
 import Constants from 'expo-constants';
 import base64 from 'react-native-base64';
-import { speechToText } from '../components/SpeechToText';
+import SpeechToText from '../components/SpeechToText';
 import axios from 'axios';
+import * as Speech from "expo-speech";
 
 export default function Chatbot() {
     const [texto, setTexto] = useState("")
@@ -25,7 +26,9 @@ export default function Chatbot() {
             },
         )
             .then((res) => {
-                setResposta(res.data.output.text)
+                let resp = res.data.output.text
+                setResposta(resp)
+                Speech.speak(resp, { language: "pt-BR" } );(res.data.output.text)
             })
             .catch((err) => {
                 alert(err)
@@ -37,9 +40,6 @@ export default function Chatbot() {
             <View>
                 <TextInput style={{ margin: 5, backgroundColor: 'white', borderColor: 'blue', borderWidth: 3 }} placeholderTextColor={"Entre com texto"} value={texto}  onChangeText={ value => { setTexto(value) }} />
                 <Button title={"Enviar"} onPress={ () => { enviarTextoParaChatbot() }} />
-            </View>
-            <View>
-                <Button title={"Enviar audio para chatbot"} onPress={() => { speechToText() } } />
             </View>
             <View>
                 <TextInput style={{ margin: 5, backgroundColor: 'white', borderColor: 'green', borderWidth: 3 }}  placeholderTextColor={"Entre com texto"}  value={resposta}/>
