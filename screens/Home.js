@@ -1,35 +1,28 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-import {Button, Text, View, StyleSheet, AsyncStorage} from 'react-native';
-import Constants from 'expo-constants';
+import React from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import styles from '../style/MainStyle';
 
+export default function Home() {
+  return(
+    <View style={styles.homeContainer}>
+      <View style={{
+        flex:1,
+        backgroundColor: '#00FF00',
+       
+        
+      }}>
+      <Text>Olá </Text>  
+      </View>
 
-export default function Home({ navigation }) {
-  const [nome, setNome] = useState("");
+      <View style={{
+        flex:2,
+        backgroundColor: '#ddFF00',
+        
+      }}>
+      <Text>Nossos serviços</Text>
+      </View>
 
-  useEffect(()=>{
-      async function recoveryData() {
-          let response = await AsyncStorage.getItem('userData');
-          let json = JSON.parse(response);
-          setNome(json.nome);
-      }
-      recoveryData();
-    },[]);
-
-  return (
-    <View style={styles.container}>
-      <Text>Seja bem vindo {nome}</Text>
-      <Button title="Perfil" onPress={ () => { navigation.navigate("Perfil") }} />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
-    padding: 8,
-  }
-});
