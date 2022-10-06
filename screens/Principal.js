@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Perfil from './Perfil';
 import Home from './Home';
 import Chatbot from './Chatbot';
-import Agendamento from './Agendamento';
+import Agendamento from './agendamento/Agendamento';
 import Suporte from './Suporte';
 
 import ButtonMic from '../components/ButtonMic';
