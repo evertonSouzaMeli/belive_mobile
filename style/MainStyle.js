@@ -19,94 +19,98 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24
   },
 
-    buttonCadastrar: {
-      backgroundColor: '#228B22',
-      marginTop: 10,
-      textAlign: 'center',
-      alignContent: 'center',
-      padding: 10
-  },
-    buttonApagar: {
-      backgroundColor: '#FF0000',
-      marginTop: 20,
-      textAlign: 'center',
-      alignContent: 'center'
+  visao:{
+    width: '100%'
   },
 
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+  buttonCadastrar: {
+    backgroundColor: '#228B22',
+    marginTop: 10,
+    textAlign: 'center',
+    alignContent: 'center',
+    padding: 10
+  },
+  buttonApagar: {
+    backgroundColor: '#FF0000',
+    marginTop: 20,
+    textAlign: 'center',
+    alignContent: 'center'
+  },
 
-      containerSuporte: {
-      flex: 1,
-      backgroundColor: '#fff',
-      marginTop: 20,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
-    suporteContainer: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      marginHorizontal: 20,
-    },
-    buttonContainer: {
-      flexDirection:'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+  containerSuporte: {
+    flex: 1,
+    backgroundColor: '#fff',
+    marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
-    homeContainer: {
-      flex: 1,
-      backgroundColor: '#fff',
-      justifyContent: 'center',
-      padding: 10
-    },
+  suporteContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    marginHorizontal: 20,
+  },
+  buttonContainer: {
+    flexDirection:'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
-    perfilContainer: {
-      flex: 1,
-      backgroundColor: '#fff',
-      justifyContent: 'center'
-    },
-suporteContainer1: {
-      backgroundColor: '#fff',
-      justifyContent: 'center'
-    },
+  homeContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    padding: 10
+  },
 
-    pefilTopContainer: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#fff'
-    },
+  perfilContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center'
+  },
+  suporteContainer1: {
+    backgroundColor: '#fff',
+    justifyContent: 'center'
+  },
 
-    maskedInput: {
-      flexGrow: 1,
-      height: 40,
-      fontSize: 18,
-      borderBottomColor: "#999",
-      borderBottomWidth: 1,
-      borderStyle: "solid",
-      alignSelf: "flex-start"
-    },
+  pefilTopContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff'
+  },
 
-    containerMask: {
-      flexDirection: "row",
-      marginBottom: 5,
-      marginLeft: 10,
-      marginRight: 10
-    },
+  maskedInput: {
+    flexGrow: 1,
+    height: 40,
+    fontSize: 18,
+    borderBottomColor: "#999",
+    borderBottomWidth: 1,
+    borderStyle: "solid",
+    alignSelf: "flex-start"
+  },
 
-    errorMessage: {
-      alignSelf: "flex-start",
-      marginLeft: 15,
-      color: "#f00",
-      fontSize: 12
-    }
-  });
+  containerMask: {
+    flexDirection: "row",
+    marginBottom: 5,
+    marginLeft: 10,
+    marginRight: 10
+  },
+
+  errorMessage: {
+    alignSelf: "flex-start",
+    marginLeft: 15,
+    color: "#f00",
+    fontSize: 12
+  }
+});
 
 export default styles

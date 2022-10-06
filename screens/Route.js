@@ -10,22 +10,22 @@ const Stack = createStackNavigator();
 
 
 export default function MyStack() {
-  return (
-    <Stack.Navigator
-    screenOptions={{
-      title: 'BeLive',
-      headerTitleAlign: 'center',
-      headerStyle: {
-            backgroundColor: '#1E90FF',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',            
-          }
-    }}>
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Cadastro" component={Cadastro}/>
-      <Stack.Screen name="Principal" component={Principal} />
-    </Stack.Navigator>
-  );
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                title: 'BeLive',
+                headerTitleAlign: 'center',
+                headerStyle: {
+                    backgroundColor: '#1E90FF',
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                    fontWeight: 'bold',
+                }
+            }}>
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Cadastro" component={Cadastro}/>
+            <Stack.Screen name="Principal" component={Principal} />
+        </Stack.Navigator>
+    );
 }
