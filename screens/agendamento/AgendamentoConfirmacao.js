@@ -1,9 +1,6 @@
-import {Text, View, StyleSheet, Button, Image, Pressable} from "react-native";
+import {Text, View, StyleSheet, Button } from "react-native";
 import * as React from "react";
-import BeLive from "../../assets/BeLive.png";
-import materialIcons from "react-native-vector-icons/MaterialIcons";
 import UserImg from "../../components/UserImg";
-import {color} from "react-native-elements/dist/helpers";
 
 
 export default function AgendamentoConfirmacao(){
@@ -15,9 +12,8 @@ export default function AgendamentoConfirmacao(){
         function fillSchedule(loop){
             let listOfSchedule = []
 
-            for (let i = 0; i < loop; i++){
+            for (let i = 0; i < loop; i++)
                 listOfSchedule.push(`${randomNumber(7, 20)}`.concat(":").concat(`${randomNumber(10, 59)}`))
-            }
 
             return listOfSchedule;
         }
