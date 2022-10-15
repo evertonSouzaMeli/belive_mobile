@@ -1,26 +1,50 @@
 import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
-
-  imagem:{
+  imagemSuporte: {
     width: 200,
     height: 200,
+  },
+    imagemLogin: {
+    width: 200,
+    height: 200,
+  },
+    imagemHome: {
+    width: 150,
+    height: 150,
   },
   buttonEntrar: {
     marginTop: 10,
     textAlign: 'center',
     alignContent: 'center',
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
 
   buttonVoltar: {
     marginTop: 10,
     textAlign: 'center',
     alignContent: 'center',
-    paddingHorizontal: 24
+    paddingHorizontal: 24,
   },
 
-  visao:{
-    width: '100%'
+  maskedInput: {
+      flexGrow: 1,
+      height: 40,
+      fontSize: 18,
+      borderBottomColor: "#999",
+      borderBottomWidth: 1,
+      borderStyle: "solid",
+      alignSelf: "flex-start"
+    },
+      containerMask: {
+      flexDirection: "row",
+      marginBottom: 5,
+      marginLeft: 10,
+      marginRight: 10
+    },
+
+  visao: {
+    width: '100%',
+    height: '100%',
   },
 
   buttonCadastrar: {
@@ -28,13 +52,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: 'center',
     alignContent: 'center',
-    padding: 10
+    padding: 10,
   },
   buttonApagar: {
     backgroundColor: '#FF0000',
     marginTop: 20,
     textAlign: 'center',
-    alignContent: 'center'
+    alignContent: 'center',
   },
 
   container: {
@@ -59,7 +83,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   buttonContainer: {
-    flexDirection:'column',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -68,49 +92,49 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     justifyContent: 'center',
-    padding: 10
+    padding: 10,
   },
 
   perfilContainer: {
     flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   suporteContainer1: {
     backgroundColor: '#fff',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 
   pefilTopContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
 
   maskedInput: {
     flexGrow: 1,
     height: 40,
     fontSize: 18,
-    borderBottomColor: "#999",
+    borderBottomColor: '#999',
     borderBottomWidth: 1,
-    borderStyle: "solid",
-    alignSelf: "flex-start"
+    borderStyle: 'solid',
+    alignSelf: 'flex-start',
   },
 
   containerMask: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginBottom: 5,
     marginLeft: 10,
-    marginRight: 10
+    marginRight: 10,
   },
 
   errorMessage: {
-    alignSelf: "flex-start",
+    alignSelf: 'flex-start',
     marginLeft: 15,
-    color: "#f00",
-    fontSize: 12
-  }
+    color: '#f00',
+    fontSize: 12,
+  },
 });
 
-export default styles
+export default styles;

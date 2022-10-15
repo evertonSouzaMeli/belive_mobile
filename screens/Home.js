@@ -1,28 +1,42 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { useState, useEffect } from 'react';
+import { Text, View, StyleSheet, Image } from 'react-native';
 import styles from '../style/MainStyle';
+import ImageCarousel from '../components/carrosel';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function Home() {
-    return(
-        <View style={styles.homeContainer}>
-            <View style={{
-                flex:1,
-                backgroundColor: '#00FF00',
+  const [user, setUser] = useState({
+    nome: '',
+  });
 
+  useEffect(() => {
+    async function recoveryData() {
+      let response = await AsyncStorage.getItem('userData');
+      setUser(JSON.parse(response));
+    }
+    recoveryData();
+  }, []);
 
-            }}>
-                <Text>Olá </Text>
-            </View>
-
-            <View style={{
-                flex:2,
-                backgroundColor: '#ddFF00',
-
-            }}>
-                <Text>Nossos serviços</Text>
-            </View>
-
+  return (
+    <View style={styles.homeContainer}>
+  
+        <View style={{marginTop:40, flex:1}}>
+        <Text style={estilo.texto}>Bem-vindo(a), {user.nome}!</Text>
+        </View >
+        <View style={{flex:2, marginBotton:15}}>
+        <ImageCarousel />
         </View>
-    );
+    </View>
+  );
 }
 
+const estilo = StyleSheet.create({
+  texto: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginTop: 10,
+    textAlign: 'center',
+  },
+});

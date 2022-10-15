@@ -35,50 +35,50 @@ export default function Login({ navigation }) {
   };
 
   return (
-      <View style={styles.container}>
+    <View style={styles.container}>
 
-        <Image style={styles.imagem} source={require('../assets/BeLive.png')} />
-        <Text style={{marginTop:50, marginBottom:20}} h3>Bem-vindo(a) ao BeLive!</Text>
+    <Image style={styles.imagemLogin} source={require('../assets/BeLive.png')} />
+      <Text style={{marginTop:50, marginBottom:20}} h3>Bem-vindo(a) ao BeLive!</Text>
 
-        <Input
-            type="text"
-            placeholder="E-mail"
-            leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-            value={email}
-            onChangeText={(value) => {
-              setEmail(value);
-            }}
-            keyboardType="email-address"
-        />
+      <Input
+        type="text"
+        placeholder="E-mail"
+        leftIcon={{ type: 'font-awesome', name: 'envelope' }}
+        value={email}
+        onChangeText={(value) => {
+          setEmail(value);
+        }}
+        keyboardType="email-address"
+      />
 
-        <Input
-            type="password"
-            placeholder="Senha"
-            leftIcon={{ type: 'font-awesome', name: 'lock' }}
-            value={senha}
-            onChangeText={value => {
-              setSenha(value);
-            }}
-            secureTextEntry={true}
-        />
+      <Input
+        type="password"
+        placeholder="Senha"
+        leftIcon={{ type: 'font-awesome', name: 'lock' }}
+        value={senha}
+        onChangeText={value => {
+          setSenha(value);
+        }}
+        secureTextEntry={true}
+      />
 
-        <Button
-            icon={<Icon name="check" size={15} color="white" />}
-            title=" Entrar"
-            buttonStyle={styles.buttonEntrar}
-            onPress={() => {
-              entrar();
-            }}
-        />
+      <Button
+        icon={<Icon name="check" size={15} color="white" />}
+        title=" Entrar"
+        buttonStyle={styles.buttonEntrar}
+        onPress={() => {
+          entrar();
+        }}
+      />
 
-        <Button
-            icon={<Icon name="user" size={15} color="white" />}
-            title=" Cadastrar"
-            buttonStyle={styles.buttonCadastrar}
-            onPress={() => {
-              cadastrar();
-            }}
-        />
-      </View>
+      <Button
+        icon={<Icon name="user" size={15} color="white" />}
+        title=" Cadastrar"
+        buttonStyle={styles.buttonCadastrar}
+        onPress={() => {
+          cadastrar();
+        }}
+      />
+    </View>
   );
 }

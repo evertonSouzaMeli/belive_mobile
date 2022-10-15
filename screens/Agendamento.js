@@ -1,35 +1,43 @@
 import React, { useState, useCallback } from "react";
+import styles from '../style/MainStyle';
+import ImageCarousel from '../components/carrosel';
 import {StyleSheet, Text, View, Button} from "react-native";
-import {Picker} from "react-native-web";
+import {Picker} from "@react-native-picker/picker";
+import DatePicker from 'react-datepicker';
 import { useRoute } from '@react-navigation/native';
-import mainStyles from "../../style/MainStyle";
+import { ScrollView } from 'react-native-gesture-handler';
+import { KeyboardAvoidingView } from 'react-native';
+import { Platform } from 'react-native';
 
 
-export default function Agendamento(){
+
+export default function Agendamento({navigation}){
 const [especialidade, setEspecialidade] = useState("");
 const [localidade, setLocalidade] = useState("");
 
-const especialidades = ['Pediatria', 'Ortopedia'];
-const localidades = ['Zona Sul', 'Centro', 'Zona Norte', 'Zona Leste', 'Zona Oeste'];
+const especialidades = ['--Nenhum--','Anestesista', 'Cardiologista', 'Cirurgião', 'Clinico', 'Dermatologista', 'Endocrino', 'Ginecologista', 'Hematologista', 'Neurologista', 'Oftalmologista', 'Oncologista', 'Ortopedista', 'Pediatra','Psicólogo', 'Psiquiatra', 'Urologista'];
+const localidades = ['--Nenhum--','Anestesista', 'Cardiologista', 'Cirurgião', 'Clinico', 'Dermatologista', 'Endocrino', 'Ginecologista', 'Hematologista', 'Neurologista', 'Oftalmologista', 'Oncologista', 'Ortopedista', 'Pediatra','Psicólogo', 'Psiquiatra', 'Urologista'];
 
 
 const buscar = () => {
-   // let resultado = { ...localidade, ...especialidade }
+    navigation.reset({ index: 0, routes: [{ name: 'Consulta' }] });
+    
+  };
 
-    navigation.navigate('AgendamentoResultado');
-
-    //enviar resultado
-};
 
 return (
-    <View style={styles.container}>
 
+<KeyboardAvoidingView
+    behavior={Platform.OS == "ios" ? "padding" : "height"}
+    style={styles.perfilContainer}
+    keyboardVerticalOffset={80}>
+  <ScrollView style={{ width: '100%' }}>
         <View>
-            <View style={styles.picker_view}>
-                <Text style={styles.texto}>Selecione a especialidade:</Text>
+            <View style={stylesAgend.picker_view}>
+                <Text style={stylesAgend.texto}>Selecione a especialidade:</Text>
                 <Picker
                     selectedValue={especialidade}
-                    style={styles.picker_view.picker}
+                    style={stylesAgend.picker_view.picker}
                     onValueChange={(itemValue, itemIndex) => setEspecialidade(itemValue)}
                 >
                     {
@@ -40,12 +48,12 @@ return (
                 </Picker>
             </View>
 
-            <View style={styles.picker_view}>
-                <Text style={styles.texto}>Selecione a Região:</Text>
+            <View style={stylesAgend.picker_view}>
+                <Text style={stylesAgend.texto}>Selecione a Data:</Text>
                 <Picker
                     selectedValue={localidade}
                     onValueChange={(itemValue, itemIndex) => setLocalidade(itemValue)}
-                    style={styles.picker_view.picker}>
+                    style={stylesAgend.picker_view.picker}>
                     {
                         localidades.map((item, index) => {
                             return <Picker.Item value={item} label={item} key={index}/>
@@ -57,22 +65,18 @@ return (
 
         <View style={{ padding: 20 }}>
             <Button title="Buscar"
-                    buttonStyle={styles.marginButton}
+                    buttonStyle={stylesAgend.marginButton}
                     onPress={ () => {
                         buscar();
                     }}
             />
         </View>
-    </View>
+    </ScrollView>
+    </KeyboardAvoidingView>
 );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        width:'100%',
-        justifyContent: 'space-around'
-    },
+const stylesAgend = StyleSheet.create({
     picker_view:{
         width: '100%',
         marginVertical: 10,
