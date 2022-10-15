@@ -29,11 +29,9 @@ export default function Home() {
                 }
             });
 
-
             let resp = req.data
 
             setUser(resp);
-
         } catch (err) {
             alert(err.response.data.message);
         }

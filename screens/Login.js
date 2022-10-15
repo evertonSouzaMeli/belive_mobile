@@ -35,7 +35,7 @@ export default function Login({ navigation }) {
   const entrar = async () => {
     try{
 
-      let obj = {username: email, password: senha}
+      let obj = { username: email, password: senha}
 
       let req = await api.post('/user/customer/login', obj,{
         headers: {
