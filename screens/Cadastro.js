@@ -8,6 +8,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { KeyboardAvoidingView } from 'react-native';
 import { TextInputMask } from 'react-native-masked-text';
 import styles from '../style/MainStyle';
+import axios from 'axios';
 
 //PARAR AQUI
 
@@ -29,9 +30,12 @@ export default function Cadastro({ navigation }) {
   const [mensagem, setMensagem] = useState(null)
   const [tipo, setTipo] = useState(null)
 
+  const api = axios.create({ baseURL: 'http://localhost:8080',  })
+
   let cpfField = null;
   let telefoneField = null;
 
+  /**
   const showDialog = (titulo, mensagem, tipo) => {
     setVisibleDialog(true);
     setTitulo(titulo);
@@ -42,15 +46,18 @@ export default function Cadastro({ navigation }) {
   const hideDialog = (status) => {
     setVisibleDialog(status)
   }
+**/
 
+  /**
   const validar = () => {
     let error = false
     setErrorEmail(null)
     setErrorCpf(null)
     setErrorSenha(null)
     }
+   **/
   
-  /**
+ /**
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     if (!re.test(String(email).toLowerCase())){
       setErrorEmail("Preencha seu e-mail corretamente")
@@ -70,34 +77,29 @@ export default function Cadastro({ navigation }) {
     }
     return !error
   }
+
 **/
 
+   const cadastrar = async () => {
+   let obj = {
+     name: nome,
+     cpf: cpf,
+     userLogin: {
+       username: email,
+       password: senha
+     }
+   }
+   
+   let req = await api.post('/user/customer/register', obj, {
+     headers: {
+       'Content-Type': 'application/json'
+     }
+   }).catch(err => alert(err.response.data.message));
 
-   const cadastrar = () => {
-      if (validar()){
-        setLoading(true)
-        
-        let data = {
-          email: email,
-          cpf: cpf,
-          nome: nome,
-          telefone: telefone,
-          senha: senha
-        }
-        
-        usuarioService.cadastrar(data)
-        .then((response) => {
-          setLoading(false)
-          const titulo = (response.data.status) ? "Sucesso" : "Erro"
-          showDialog(titulo, response.data.mensagem, "SUCESSO")
-          //Alert.alert(titulo, response.data.mensagem)          
-        })
-        .catch((error) => {
-          setLoading(false)
-          showDialog("Erro","Houve um erro inesperado", "ERRO")
-          //Alert.alert("Erro", "Houve um erro inesperado")
-        })
-      }
+   let resp = req.data
+   await AsyncStorage.setItem('userData', JSON.stringify(resp));
+   alert('Usuario Cadastrado com Sucesso');
+   navigation.navigate('Login', {email, senha});
   }
 
   return (
@@ -170,30 +172,7 @@ export default function Cadastro({ navigation }) {
       <Button
         title="Cadastrar"
         buttonStyle={styles.buttonCadastrar}
-        /**
-         onPress={() => cadastrar()}/>
-       **/
-
-        
-       onPress={async () => {
-          if (
-            (nome != null) &
-            (cpf != null) &
-            (telefone != null) &
-            (email != null) &
-            (senha != null)
-          ) {
-            AsyncStorage.setItem(
-              'userData',
-              JSON.stringify({ nome, cpf, telefone, email, senha })
-            );
-            alert('Usuario Cadastrado com Sucesso');
-            navigation.navigate('Login', { email, senha });
-          } else {
-            alert('Preencha todos os campos!');
-          }
-        }} 
-      />
+        onPress={() => { cadastrar() } }/>
       
       <Button
         title="Voltar"

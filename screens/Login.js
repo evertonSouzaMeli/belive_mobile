@@ -5,6 +5,8 @@ import { View, StyleSheet, TextInput, Image } from 'react-native';
 import { Button, Input, Text } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from '../style/MainStyle';
+import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({ navigation }) {
   const route = useRoute();
@@ -15,6 +17,8 @@ export default function Login({ navigation }) {
     email: '',
     senha: '',
   });
+
+  const api = axios.create({ baseURL: 'http://localhost:8080',  })
 
   const loadData = () => {
     const email = route.params.email;
@@ -28,10 +32,24 @@ export default function Login({ navigation }) {
     navigation.navigate('Cadastro');
   };
 
-  const entrar = () => {
-    setEmail('');
-    setSenha('');
-    navigation.reset({ index: 0, routes: [{ name: 'Principal' }] });
+  const entrar = async () => {
+    try{
+
+      let obj = {username: email, password: senha}
+
+      let req = await api.post('/user/customer/login', obj,{
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      await AsyncStorage.setItem('token', req.data.token)
+
+      navigation.reset({ index: 0, routes: [{ name: 'Principal' }] });
+
+    }catch (err){
+      alert(err.response.data.message);
+    }
   };
 
   return (

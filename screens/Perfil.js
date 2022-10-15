@@ -6,34 +6,74 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserImg from '../components/UserImg';
 import styles from '../style/MainStyle';
+import axios from "axios";
+
 
 export default function Perfil({ navigation }) {
   const [user, setUser] = useState({
-    nome: '',
+    name: '',
     cpf: '',
-    telefone: '',
-    email: '',
-    senha: '',
+    phone: '',
+    userLogin: {
+        username: '',
+        password: '********'
+    }
   });
+
+    useEffect(() => {
+        refreshData();
+    }, []);
+
+  const api = axios.create({baseURL: 'http://localhost:8080'})
 
   const voltar = () => {
     navigation.navigate('Home');
   };
 
-  const deletar = () => {
-    AsyncStorage.clear();
-    alert('Usuário removido');
-    navigation.reset({ index: 0, routes: [{ name: 'Login' }] });
+  const deletar = async () => {
+
+      try {
+          let token = await AsyncStorage.getItem('token');
+
+          let req = await api.get('/user/customer/delete', {
+              headers: {
+                  Authorization: token,
+                  'Content-Type': 'application/json'
+              }
+          });
+
+          console.log(req.data);
+          AsyncStorage.clear();
+          alert('Usuário removido');
+          navigation.reset({ index: 0, routes: [{ name: 'Login' }] });
+
+      }catch (err) {
+          alert(err.response.data.message);
+      }
     //navigation.navigate("Login")
   };
 
-  useEffect(() => {
-    async function recoveryData() {
-      let response = await AsyncStorage.getItem('userData');
-      setUser(JSON.parse(response));
+   const refreshData = async () => {
+        try {
+            let token = await AsyncStorage.getItem('token');
+
+            let req = await api.get('/user/customer/get', {
+                headers: {
+                    Authorization: token,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+
+            let resp = req.data
+
+            setUser(resp);
+
+        } catch (err) {
+            alert(err.response.data.message);
+        }
     }
-    recoveryData();
-  }, []);
+
 
   return (
     <View style={[styles.perfilContainer, specificStyle.cont1]}>
@@ -43,7 +83,7 @@ export default function Perfil({ navigation }) {
 
       <View style={specificStyle.campo}>
         <Text style={specificStyle.texto}>Nome: </Text>
-        <Text style={specificStyle.texto2}>{user.nome}</Text>
+        <Text style={specificStyle.texto2}>{user.name}</Text>
       </View>
 
       <View style={specificStyle.campo}>
@@ -53,17 +93,17 @@ export default function Perfil({ navigation }) {
 
       <View style={specificStyle.campo}>
         <Text style={specificStyle.texto}>Telefone:  </Text>
-        <Text style={specificStyle.texto2}>{user.telefone}</Text>
+        <Text style={specificStyle.texto2}>{user.phone}</Text>
       </View>
 
       <View style={specificStyle.campo}>
         <Text style={specificStyle.texto}>Email: </Text>
-        <Text style={specificStyle.texto2}>{user.email}</Text>
+        <Text style={specificStyle.texto2}>{user.userLogin.username}</Text>
       </View>
 
       <View style={specificStyle.campo}>
         <Text style={specificStyle.texto}>Senha: </Text>
-        <Text style={specificStyle.texto2}>{user.senha}</Text>
+        <Text style={specificStyle.texto2}>{user.userLogin.password}</Text>
       </View>
 
       <View style={[styles.buttonContainer, specificStyle.cont1]}>
