@@ -12,6 +12,20 @@ export default function AgendamentoResultado({route, navigation}) {
     const [companyList, setCompanyList] = useState([...data]);
     const api = axios.create({baseURL: 'http://localhost:8080'})
 
+
+    const addPlaceholderAvailableSchedule = (value) => {
+        let message = "Encontre um horario"
+
+        Array.prototype.insert = function ( index, ...items ) {
+            this.splice( index, 0, ...items);
+        };
+
+        value.forEach( doctor => doctor.scheduleAvailable.insert(0, message))
+
+        return value;
+    }
+
+
     const buscarMedicos = async (value) => {
         try {
             let token = await AsyncStorage.getItem('token');
@@ -37,7 +51,7 @@ export default function AgendamentoResultado({route, navigation}) {
             let resp = req.data
 
             if (Array.isArray(resp) && resp.length) {
-                navigation.navigate('AgendamentoMedico', { data: req.data, cnpj: value.cnpj }) ;
+                navigation.navigate('AgendamentoMedico', { data: addPlaceholderAvailableSchedule(req.data), cnpj: value.cnpj }) ;
             } else {
                 alert('Não há especialista para essa data')
             }
