@@ -26,7 +26,7 @@ export default function Cadastro({navigation}) {
     const [mensagem, setMensagem] = useState(null)
     const [tipo, setTipo] = useState(null)
 
-    const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
+    const api = axios.create({baseURL: 'http://localhost:8080'})
 
     let cpfField = null;
     let telefoneField = null;

@@ -12,7 +12,7 @@ export default function EditarPerfil({navigation, route}) {
     const [phone, setPhone] = useState('')
 
     let telefoneField = null;
-    const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
+    const api = axios.create({baseURL: 'http://localhost:8080'})
 
 
     useEffect(() => {

@@ -23,7 +23,7 @@ export default function Perfil({navigation}) {
         refreshData();
     }, []);
 
-    const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
+    const api = axios.create({baseURL: 'http://localhost:8080'})
 
     const pageEdit = () => {
         let { name, phone, userLogin } =  user
