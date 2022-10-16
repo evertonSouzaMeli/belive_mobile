@@ -5,10 +5,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from '../style/MainStyle';
 
 export default function AgendamentoResultado({route, navigation}) {
-    const { data, timestamp } = route.params;
+    const { data, day, month} = route.params;
 
     const [company, setCompany] = useState({})
-    const [datetime, setDatetime] = useState(timestamp);
     const [companyList, setCompanyList] = useState([...data]);
     const api = axios.create({baseURL: 'http://localhost:8080'})
 
@@ -38,8 +37,8 @@ export default function AgendamentoResultado({route, navigation}) {
 
             const req = await api.get('/user/company/doctor/avaliable_schedule/list', {
                 params: {
-                    day: 16,
-                    month: 10,
+                    day: day,
+                    month: month,
                     cnpj: value.cnpj,
                     specialist: value.doctorList[0].speciality
                 },
