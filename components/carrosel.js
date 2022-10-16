@@ -1,30 +1,26 @@
 import React, {useRef, useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Dimensions,
-  ImageBackground,
-} from 'react-native';
+import {Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View,} from 'react-native';
 import Carousel from 'react-native-anchor-carousel';
 import SimplePaginationDot from './SimplePaginationDot';
 
-const {width: windowWidth} = Dimensions.get('window');
+const { width: windowWidth } = Dimensions.get('window');
 
 const data = [
   {
-    uri: 'https://imgur.com/gallery/OMdvXk2',
-
+    uri: 'https://justiceaction.org.au/wp-content/uploads/2020/09/iStock-639896942-1024x683.jpg',
   },
   {
-    uri: 'https://imgur.com/gallery/q8i4inn',
-
+    uri: 'https://img.pebmed.com.br/wp-content/uploads/2021/12/10191550/dia_internacional_da_saude_universal.jpg.webp',
   },
   {
-    uri: 'https://i.imgur.com/IGRuEAa.jpg',
-    
-  }
+    uri: 'https://images.moneycontrol.com/static-mcnews/2022/09/Health-insurance.png?impolicy=website&width=770&height=431',
+  },
+   {
+    uri: 'https://images.moneycontrol.com/static-mcnews/2022/09/Health-insurance.png?impolicy=website&width=770&height=431',
+  },
+   {
+    uri: 'https://images.moneycontrol.com/static-mcnews/2022/09/Health-insurance.png?impolicy=website&width=770&height=431',
+  },
 ];
 
 const INITIAL_INDEX = 0;
@@ -36,8 +32,8 @@ export default function ImageCarousel(props) {
     setCurrentIndex(index);
   }
 
-  function renderItem({item, index}) {
-    const {uri, title, content} = item;
+  function renderItem({ item, index }) {
+    const { uri, title, content } = item;
     return (
       <TouchableOpacity
         activeOpacity={1}
@@ -45,27 +41,23 @@ export default function ImageCarousel(props) {
         onPress={() => {
           carouselRef.current.scrollToIndex(index);
         }}>
-        <ImageBackground source={{uri: uri}} style={styles.imageBackground}>
-          <View style={styles.rightTextContainer}>
-            <Text style={styles.rightText}>Lorem</Text>
-          </View>
-        </ImageBackground>
-        <View style={styles.lowerContainer}>
-          <Text style={styles.titleText}>{title}</Text>
-          <Text style={styles.contentText}>{content}</Text>
-        </View>
+
+        <ImageBackground
+          source={{ uri: uri }}
+          style={styles.imageBackground}></ImageBackground>
       </TouchableOpacity>
     );
   }
 
   return (
     <View style={styles.container}>
+     <Text style={styles.texto}>Confira nossos especialistas:</Text>
       <Carousel
         style={styles.carousel}
         data={data}
         renderItem={renderItem}
         itemWidth={0.7 * windowWidth}
-        inActiveOpacity={0.3}
+        inActiveOpacity={0.5}
         containerWidth={windowWidth}
         onScrollEnd={handleCarouselScrollEnd}
         ref={carouselRef}
@@ -76,9 +68,9 @@ export default function ImageCarousel(props) {
 }
 
 const styles = StyleSheet.create({
-  container: {backgroundColor: '#141518', paddingVertical: 20},
+  container: { backgroundColor: '#1E90FF', paddingVertical: 20, borderRadius: 25 },
   carousel: {
-    backgroundColor: '#141518',
+    backgroundColor: '#fff',
     aspectRatio: 1.5,
     flexGrow: 0,
     marginBottom: 20,
@@ -97,26 +89,12 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: 'white',
   },
-  rightTextContainer: {
-    marginLeft: 'auto',
-    marginRight: -2,
-    backgroundColor: 'rgba(49, 49, 51,0.5)',
-    padding: 3,
-    marginTop: 3,
-    borderTopLeftRadius: 5,
-    borderBottomLeftRadius: 5,
-  },
-  rightText: {color: 'white'},
-  lowerContainer: {
-    flex: 1,
-    margin: 10,
-  },
-  titleText: {
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  contentText: {
-    marginTop: 10,
-    fontSize: 12,
+  texto:{
+    fontSize:18,
+    fontWeight:'bold',
+    textAlign:'center',
+    color: '#FFF',
+    justifyContent:'center',
+    marginBottom:15
   },
 });

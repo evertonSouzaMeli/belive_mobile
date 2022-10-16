@@ -1,9 +1,6 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StatusBar } from "expo-status-bar";
-import styles from '../style/MainStyle';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import Perfil from './Perfil';
 import Home from './Home';
@@ -15,8 +12,8 @@ import ButtonMic from '../components/ButtonMic';
 
 const Tab = createBottomTabNavigator();
 
-export default function Principal() {
-  
+export default function Principal({navigaton}) {
+
   return (
   <Tab.Navigator
       initialRouteName="Home"
@@ -24,7 +21,7 @@ export default function Principal() {
         tabBarInactiveTintColor: '#121212',
         tabBarActiveTintColor: '#1E90FF',
         headerShown: false,
-      tabBarStyle: { 
+      tabBarStyle: {
         paddingBottom: 5,
         paddingTop: 5
         }
@@ -83,5 +80,3 @@ export default function Principal() {
     </Tab.Navigator>
   );
 }
-
-

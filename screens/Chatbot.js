@@ -1,7 +1,7 @@
-import { StatusBar } from "expo-status-bar";
+import {StatusBar} from "expo-status-bar";
 import React from "react";
-import { TouchableOpacity, Button, StyleSheet, Text, View } from "react-native";
-import { Audio } from "expo-av";
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Audio} from "expo-av";
 import * as Speech from "expo-speech";
 import axios from "axios";
 import base64 from 'react-native-base64';
@@ -13,6 +13,24 @@ export default function App() {
     const [recording, setRecording] = React.useState("");
     const [rec, setRec] = React.useState(false);
 
+    const especialidades = [
+        'Anestesista',
+        'Cardiologista',
+        'Cirurgião',
+        'Clinico',
+        'Dermatologista',
+        'Endocrino',
+        'Ginecologista',
+        'Hematologista',
+        'Neurologista',
+        'Oftalmologista',
+        'Oncologista',
+        'Ortopedista',
+        'Pediatra',
+        'Psicólogo',
+        'Psiquiatra',
+        'Urologista',
+    ];
 
     const [userInput, setUserInput] = React.useState("");
     const [botResponse, setBotResponse] = React.useState("")
@@ -30,6 +48,8 @@ export default function App() {
                 { headers: { Authorization: `Basic ${encodedKey}`, 'Content-Type': 'application/json' } });
 
             const response = request.data.output.text[0]
+
+            if(response.includes('especialidade'))
 
             if(response === undefined) Speech.speak('Eu não entendi, você pode reformular a frase')
             setBotResponse(response)
@@ -117,7 +137,7 @@ export default function App() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#1E90FF",
+        backgroundColor: "#fff",
         alignItems: "center",
         justifyContent: "center",
     },

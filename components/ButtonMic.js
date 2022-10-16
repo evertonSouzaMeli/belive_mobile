@@ -1,6 +1,6 @@
 import React from 'react';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { View, StyleSheet } from 'react-native';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {StyleSheet, View} from 'react-native';
 
 export default function ButtonMic ({ focused, size}){
   return(

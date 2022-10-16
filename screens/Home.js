@@ -1,69 +1,58 @@
-import * as React from 'react';
-import { Text, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import styles from '../style/MainStyle';
+import ImageCarousel from '../components/carrosel';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from "axios";
 
-import Perfil from './Perfil';
 
-const Tab = createBottomTabNavigator();
+export default function Home({ navigation }) {
+    const [user, setUser] = useState({
+        name: ''
+    });
+    const api = axios.create({baseURL: 'http://localhost:8080'})
 
-function Feed() {
+    useEffect(() => {
+        refreshData();
+    }, []);
+
+
+    const refreshData = async () => {
+        try {
+            let token = await AsyncStorage.getItem('token');
+
+            let req = await api.get('/user/customer/get', {
+                headers: {
+                    Authorization: token,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            let resp = req.data
+
+            setUser(resp);
+        } catch (err) {
+            alert(err.response.data.message);
+        }
+    }
+
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Campo destinado a pagina Home!</Text>
+        <View style={styles.homeContainer}>
+            <View style={{marginTop: 20, marginBottom: 20, flex: 2}}>
+                <ImageCarousel/>
+            </View>
+            <View style={{flex: 1, marginBotton: 15, marginTop: 15}}>
+                <Text style={estilo.texto}>Bem-vindo(a), {user.name}!</Text>
+            </View>
         </View>
     );
 }
 
-function Chat() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Campo destinado ao ChatBot!</Text>
-        </View>
-    );
-}
-
-
-export default function Home() {
-    return (
-        <Tab.Navigator
-            initialRouteName="Home"
-            screenOptions={{
-                tabBarActiveTintColor: '#e91e63',
-            }}
-        >
-            <Tab.Screen
-                name="Home"
-                component={Feed}
-                options={{
-                    tabBarLabel: 'Home',
-                    tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="home" color={color} size={size} />
-                    ),
-                }}
-            />
-            <Tab.Screen
-                name="Chat"
-                component={Chat}
-                options={{
-                    tabBarLabel: 'Chat',
-                    tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="message" color={color} size={size} />
-                    ),
-                }}
-            />
-            <Tab.Screen
-                name="Perfil"
-                component={Perfil}
-                options={{
-                    tabBarLabel: 'Perfil',
-                    tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="account" color={color} size={size} />
-                    ),
-                }}
-            />
-        </Tab.Navigator>
-    );
-}
-
-
+const estilo = StyleSheet.create({
+    texto: {
+        fontWeight: 'bold',
+        fontSize: 18,
+        marginTop: 10,
+        textAlign: 'center',
+    },
+});

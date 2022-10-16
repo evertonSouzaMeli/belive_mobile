@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import styles from '../style/MainStyle';
 
 export default function Suporte() {
   return (
     <View style={styles.container}>
       <View style={styles.container}>
-        <Image style={styles.imagem} source={require('../assets/BeLive.png')} />
+        <Image style={styles.imagemSuporte} source={require('../assets/BeLive.png')} />
         <Text style={specificStyle.textoTitulo}>
           {' '}
           Agradecemos pela preferência em utilizar noss platafomra! Procuramos o
