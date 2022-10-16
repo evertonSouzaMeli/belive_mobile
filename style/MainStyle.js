@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
+
 const styles = StyleSheet.create({
   imagemSuporte: {
     width: 200,
@@ -112,6 +113,19 @@ const styles = StyleSheet.create({
   },
 
   containerMask: {
+    flexDirection: 'row',
+    marginBottom: 5,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  maskedInput2: {
+    flexGrow: 1,
+    height: 40,
+    fontSize: 18,
+    alignSelf: 'flex-start',
+  },
+
+  containerMask2: {
     flexDirection: 'row',
     marginBottom: 5,
     marginLeft: 10,

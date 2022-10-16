@@ -1,10 +1,11 @@
-import {Text, View, StyleSheet, Button, TouchableOpacity, Image} from "react-native";
+import {Button, Image, StyleSheet, Text, View} from "react-native";
 import * as React from "react";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "../style/MainStyle";
 import {Picker} from "@react-native-picker/picker";
+
 
 export default function AgendamentoMedico({navigation, route}) {
     const {data, cnpj} = route.params;
@@ -12,6 +13,7 @@ export default function AgendamentoMedico({navigation, route}) {
     const [timestamp, setTimestamp] = useState({key: 0, date: null});
 
     const api = axios.create({baseURL: 'http://localhost:8080'})
+
 
     const marcarConsulta = async (value) => {
         try {
@@ -61,24 +63,26 @@ export default function AgendamentoMedico({navigation, route}) {
                                 <Text style={estilo.card.info.text} key={index}><b>Especialidade</b>: {obj.speciality}
                                 </Text>
                             </View>
-                            <View>
-                                <Picker
-                                    selectedValue={timestamp[index]}
-                                    mode="dropdown"
-                                    style={estilo.picker_view.picker}
-                                    onValueChange={(itemValue, itemIndex) => {
-                                        setTimestamp({key: itemIndex, date: itemValue});
-                                    }}>
-                                    {obj.scheduleAvailable.map( (item, index) => {
-                                        return <Picker.Item value={item} label={item} key={index}/>
-                                    })}
-                                </Picker>
-                            </View>
-                            <View>
-                                <Button title="Confirmar" onPress={() => {
-                                    marcarConsulta(obj)
-                                }}/>
-                            </View>
+
+
+                        </View>
+                        <View>
+                            <Picker
+                                selectedValue={timestamp[index]}
+                                mode="dropdown"
+                                style={estilo.picker_view.picker}
+                                onValueChange={(itemValue, itemIndex) => {
+                                    setTimestamp({key: itemIndex, date: itemValue});
+                                }}>
+                                {obj.scheduleAvailable.map( (item, index) => {
+                                    return <Picker.Item value={item} label={item} key={index}/>
+                                })}
+                            </Picker>
+                        </View>
+                        <View>
+                            <Button title="Confirmar" onPress={() => {
+                                marcarConsulta(obj)
+                            }}/>
                         </View>
                     </View>
                 </View>

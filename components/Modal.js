@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Text, TouchableOpacity, StyleSheet, View } from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Modal from 'react-native-modal'
 
 export default class Example extends Component {

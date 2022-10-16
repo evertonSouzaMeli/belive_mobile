@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import styles from '../style/MainStyle';
 
 export default function Suporte() {

@@ -1,5 +1,4 @@
-
-import {Text, View, StyleSheet, Button } from "react-native";
+import {Button, StyleSheet, Text, View} from "react-native";
 import * as React from "react";
 import UserImg from "../components/UserImg";
 

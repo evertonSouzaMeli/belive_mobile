@@ -1,12 +1,5 @@
-import React, { useRef, useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Dimensions,
-  ImageBackground,
-} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View,} from 'react-native';
 import Carousel from 'react-native-anchor-carousel';
 import SimplePaginationDot from './SimplePaginationDot';
 

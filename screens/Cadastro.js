@@ -1,15 +1,11 @@
 import * as React from 'react';
-import {useState, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {Platform} from 'react-native';
+import {useState} from 'react';
+import {KeyboardAvoidingView, Platform, StyleSheet, View} from 'react-native';
 import {Button, Input, Text} from 'react-native-elements';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ScrollView} from 'react-native-gesture-handler';
-import {KeyboardAvoidingView} from 'react-native';
 import {TextInputMask} from 'react-native-masked-text';
 import styles from '../style/MainStyle';
 import axios from 'axios';
-import CustomDialog from "../components/CustomDialog";
 
 
 export default function Cadastro({navigation}) {
@@ -30,7 +26,7 @@ export default function Cadastro({navigation}) {
     const [mensagem, setMensagem] = useState(null)
     const [tipo, setTipo] = useState(null)
 
-    const api = axios.create({baseURL: 'http://localhost:8080',})
+    const api = axios.create({baseURL: 'http://localhost:8080'})
 
     let cpfField = null;
     let telefoneField = null;
@@ -102,8 +98,7 @@ export default function Cadastro({navigation}) {
             alert('Usuario Cadastrado com Sucesso');
             navigation.navigate('Login');
         } catch (err) {
-            err.response.status
-            alert(err.response.data.message);
+            alert(err);
         }
     }
 

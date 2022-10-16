@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
-import { Provider, Button as PaperButton, Paragraph, Dialog, Portal } from 'react-native-paper';
+import {Button as PaperButton, Dialog, Paragraph, Portal, Provider} from 'react-native-paper';
 
 const CustomDialog = (props) => {
     return (

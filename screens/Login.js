@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { useState } from 'react';
-import { useRoute } from '@react-navigation/native';
-import { View, StyleSheet, TextInput, Image } from 'react-native';
-import { Button, Input, Text } from 'react-native-elements';
+import {useState} from 'react';
+import {useRoute} from '@react-navigation/native';
+import {Image, View} from 'react-native';
+import {Button, Input, Text} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from '../style/MainStyle';
 import axios from "axios";
@@ -18,7 +18,7 @@ export default function Login({ navigation }) {
     senha: '',
   });
 
-  const api = axios.create({ baseURL: 'http://localhost:8080',  })
+  const api = axios.create({baseURL: 'http://localhost:8080'})
 
   const loadData = () => {
     const email = route.params.email;
@@ -49,6 +49,7 @@ export default function Login({ navigation }) {
 
     }catch (err){
       alert(err.response.data.message);
+      console.log(err);
     }
   };
 

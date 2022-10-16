@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import MyStack from './screens/Route';
-
 
 
 export default function App(){

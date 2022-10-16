@@ -1,6 +1,5 @@
-import React from 'react';
-import {useState, useEffect} from 'react';
-import {Text, View, StyleSheet, Image} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 import styles from '../style/MainStyle';
 import ImageCarousel from '../components/carrosel';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,8 +10,8 @@ export default function Home({ navigation }) {
     const [user, setUser] = useState({
         name: ''
     });
+    const api = axios.create({baseURL: 'http://localhost:8080'})
 
-    const api = axios.create({baseURL: 'http://localhost:8080',})
     useEffect(() => {
         refreshData();
     }, []);
