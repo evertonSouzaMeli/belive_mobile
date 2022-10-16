@@ -10,7 +10,7 @@ export default function Home({ navigation }) {
     const [user, setUser] = useState({
         name: ''
     });
-    const api = axios.create({baseURL: 'http://localhost:8080'})
+    const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
 
     useEffect(() => {
         refreshData();

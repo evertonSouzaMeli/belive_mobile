@@ -16,7 +16,7 @@ export default function Agendamento({navigation}) {
 
     const especialidades = ['--Nenhum--', 'Anestesista', 'Cardiologista', 'Cirurgião', 'Clinico', 'Dermatologista', 'Endocrino', 'Ginecologista', 'Hematologista', 'Neurologista', 'Oftalmologista', 'Oncologista', 'Ortopedista', 'Pediatra', 'Psicólogo', 'Psiquiatra', 'Urologista'];
 
-    const api = axios.create({baseURL: 'http://localhost:8080'})
+    const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
 
     const buscar = async () => {
 
