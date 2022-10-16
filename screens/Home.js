@@ -1,35 +1,58 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-import {Button, Text, View, StyleSheet, AsyncStorage} from 'react-native';
-import Constants from 'expo-constants';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import styles from '../style/MainStyle';
+import ImageCarousel from '../components/carrosel';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from "axios";
 
 
 export default function Home({ navigation }) {
-  const [nome, setNome] = useState("");
+    const [user, setUser] = useState({
+        name: ''
+    });
+    const api = axios.create({baseURL: 'http://localhost:8080'})
 
-  useEffect(()=>{
-      async function recoveryData() {
-          let response = await AsyncStorage.getItem('userData');
-          let json = JSON.parse(response);
-          setNome(json.nome);
-      }
-      recoveryData();
-    },[]);
+    useEffect(() => {
+        refreshData();
+    }, []);
 
-  return (
-    <View style={styles.container}>
-      <Text>Seja bem vindo {nome}</Text>
-      <Button title="Perfil" onPress={ () => { navigation.navigate("Perfil") }} />
-    </View>
-  );
+
+    const refreshData = async () => {
+        try {
+            let token = await AsyncStorage.getItem('token');
+
+            let req = await api.get('/user/customer/get', {
+                headers: {
+                    Authorization: token,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            let resp = req.data
+
+            setUser(resp);
+        } catch (err) {
+            alert(err.response.data.message);
+        }
+    }
+
+    return (
+        <View style={styles.homeContainer}>
+            <View style={{marginTop: 20, marginBottom: 20, flex: 2}}>
+                <ImageCarousel/>
+            </View>
+            <View style={{flex: 1, marginBotton: 15, marginTop: 15}}>
+                <Text style={estilo.texto}>Bem-vindo(a), {user.name}!</Text>
+            </View>
+        </View>
+    );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
-    padding: 8,
-  }
+const estilo = StyleSheet.create({
+    texto: {
+        fontWeight: 'bold',
+        fontSize: 18,
+        marginTop: 10,
+        textAlign: 'center',
+    },
 });
