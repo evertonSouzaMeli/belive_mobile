@@ -1,34 +1,31 @@
-import {Text, View, StyleSheet, Button} from "react-native";
+import {Text, View, StyleSheet, Button, TouchableOpacity, Image} from "react-native";
 import * as React from "react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import styles from "../style/MainStyle";
+import {Picker} from "@react-native-picker/picker";
 
 export default function AgendamentoMedico({navigation, route}) {
-    const [doctorList, setDoctorList] = useState([{}]);
-    const [doctor, setDoctor] = useState(	{
-        speciality: "",
-        name: "",
-        scheduleAvailable: [],
-        crm: 0
-    })
-
-    const [appointment, setAppointment] = useState({})
+    const {data, cnpj} = route.params;
+    const [doctorList, setDoctorList] = useState([...data]);
+    const [timestamp, setTimestamp] = useState({key: 0, date: null});
 
     const api = axios.create({baseURL: 'http://localhost:8080'})
 
-    const marcarConsulta = async () => {
+    const marcarConsulta = async (value) => {
         try {
+            alert(timestamp.date)
+
             let token = await AsyncStorage.getItem('token');
             let obj = {
                 companyDTO: {
-                    cnpj: ""
+                    cnpj: cnpj
                 },
                 doctor: {
-                    crm: 0
+                    crm: value.crm
                 },
-                startOfAppointment: ""
+                startOfAppointment: timestamp.date
             }
 
             const req = await api.post('http://localhost:8080/appointment/create', obj, {
@@ -40,102 +37,67 @@ export default function AgendamentoMedico({navigation, route}) {
 
             alert('Consulta marcada com sucesso!')
 
-            navigation.reset({index: 0, routes: [{name: 'Home'}]});
+            navigation.navigate('Principal');
 
         } catch (err) {
+            console.log(err.response)
             alert(err.response.data.message);
         }
     }
 
-    const fillInfo = () => {
-        const { data } = route.params;
-    }
-
-
-    return (
-        <View style={{backgroundColor:'#fff', justifyContent:'center',}}>
-            <Text>Escolha o melhor horário</Text>
-            { fillInfo() }
-
-        </View>
-    )
-}
-
-/**
- export default function Consulta(){
-    function fillInfo() {
-        let listInfo = []
-
-        let randomNumber = (min, max) => { return Math.floor(Math.random() * (max - min + 1) + min) };
-
-        function fillSchedule(loop){
-            let listOfSchedule = []
-
-            for (let i = 0; i < loop; i++)
-                listOfSchedule.push(`${randomNumber(7, 20)}`.concat(":").concat(`${randomNumber(10, 59)}`))
-
-            return listOfSchedule;
-        }
-
-        for (let i = 0; i < 4 ; i++){
-            listInfo.push({
-                date: new Date().toLocaleDateString(),
-                name: `doctor_${randomNumber(1, 10)}`,
-                crm:  randomNumber(10000, 99999),
-                schedule: fillSchedule(3),
-            });
-        }
-
-
-        const listOfSchedule = (obj) => {
-            return obj.schedule.map((date, index) => {
-                return ( <Button style={styles.card.buttonSchedule} title={date} key={index}/>);
-            })
-        }
-
-
-        return listInfo.map((obj, index) => {
-
-            const key = index;
+    function results() {
+        return doctorList.map((obj, index) => {
             return (
-                <View style={styles.contentContainer}>
-                    <View style={styles.card}>
-                        <View style={styles.card.info}>
-                            <View style={styles.card.info.photo}>
-                                <UserImg/>
+                <View style={estilo.contentContainer}>
+                    <View style={estilo.card}>
+                        <View style={estilo.card.info}>
+                            <View style={estilo.card.info.photo}>
+                                <Image style={styles.imagemEmpresa} source={require('../assets/BeLive.png')}/>
                             </View>
 
-                            <View style={styles.card.info.data}>
-                                <Text style={styles.card.dateText} key={key}>{obj.date}</Text>
-                                <Text style={styles.card.info.text} key={key}>Nome: {obj.name}</Text>
-                                <Text style={styles.card.info.text} key={key}>CRM: {obj.crm}</Text>
+                            <View style={estilo.card.info.data}>
+                                <Text style={estilo.card.info.text} key={index}><b>Nome</b>: {obj.name}</Text>
+                                <Text style={estilo.card.info.text} key={index}><b>CRM</b>: {obj.crm}</Text>
+                                <Text style={estilo.card.info.text} key={index}><b>Especialidade</b>: {obj.speciality}
+                                </Text>
+                            </View>
+                            <View>
+                                <Picker
+                                    selectedValue={timestamp[index]}
+                                    mode="dropdown"
+                                    style={estilo.picker_view.picker}
+                                    onValueChange={(itemValue, itemIndex) => {
+                                        setTimestamp({key: itemIndex, date: itemValue});
+                                    }}>
+                                    {obj.scheduleAvailable.map( (item, index) => {
+                                        return <Picker.Item value={item} label={item} key={index}/>
+                                    })}
+                                </Picker>
+                            </View>
+                            <View>
+                                <Button title="Confirmar" onPress={() => {
+                                    marcarConsulta(obj)
+                                }}/>
                             </View>
                         </View>
-
-                        <View style={styles.card.schedule}>
-                            { listOfSchedule(obj) }
-                        </View>
-
                     </View>
                 </View>
             )
-        });
+        })
     }
 
-    return(
-        <View style={{backgroundColor:'#ffff'}}>
-            <Text style={styles.title}>Escolha Melhor Horario</Text>
-            { fillInfo() }
+    return (
+        <View>
+            {results()}
         </View>
     )
 }
 
- const styles = StyleSheet.create({
-    container: {
+const estilo = StyleSheet.create({
+    contentContainer: {
         flex: 1,
-        width:'100%',
-        marginHorizontal: 20,
-        flexWrap: 'wrap'
+        paddingHorizontal: 10,
+        justifyContent: 'center'
     },
     title: {
         textAlign: "center",
@@ -143,55 +105,72 @@ export default function AgendamentoMedico({navigation, route}) {
         marginTop: 20,
         fontSize: 25
     },
-    contentContainer:{
-        flex:1,
-        paddingHorizontal:20,
-        backgroundColor: '#ffff'
-    },
     card: {
         display: 'flex',
         flexWrap: 'wrap',
-        backgroundColor: '#f1f1f1',
+        backgroundColor: '#fbfbfb',
         marginVertical: 20,
-        borderRadius: 35,
+        borderRadius: 10,
         shadowColor: '#171717',
-        shadowOffset: { width: -2, height: 4 },
+        shadowOffset: {width: -2, height: 4},
         shadowOpacity: 0.2,
         shadowRadius: 3,
         padding: 10,
-        info:{
+        info: {
             display: 'flex',
             flexDirection: 'row',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between',
             text: {
-                fontSize: 18
+                fontSize: 14
             },
             photo: {
-                paddingHorizontal: 10
-
+                alignItems: 'center',
+                flex: .4
             },
             data: {
-                alignContent:'center',
-                justifyContent:'space-around',
-                marginVertical: 10
+                alignContent: 'center',
+                justifyContent: 'space-around',
+                marginVertical: 10,
+                flex: 1,
+                paddingLeft: 20
             }
-
         },
-        schedule:{
+        schedule: {
             flexDirection: 'row',
             justifyContent: 'space-around',
             paddingHorizontal: 40
         },
 
-        buttonSchedule:{
+        buttonSchedule: {
             borderRadius: 30,
             fontWeight: 'bold'
         },
-        dateText:{
-            fontWeight:'bold',
-            fontsize:18,
+        dateText: {
+            fontWeight: 'bold',
+            fontsize: 18,
             color: '#121212',
         }
+    },
+    picker_view: {
+        width: '100%',
+        marginVertical: 10,
+        paddingHorizontal: 20,
+        picker: {
+            height: 50,
+            borderColor: '#D5D5D5',
+            borderWidth: 2,
+            padding: 5,
+            borderRadius: 5,
+            marginVertical: 10
+        }
+    },
+    texto: {
+        fontWeight: "bold",
+        fontSize: 18
+    },
+    marginButton: {
+        height: 500
     }
-})
-
- **/
+});

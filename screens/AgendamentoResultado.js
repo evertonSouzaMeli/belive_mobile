@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import {useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import UserImg from "../components/UserImg";
+import styles from '../style/MainStyle';
 
 export default function AgendamentoResultado({route, navigation}) {
     const { data, timestamp } = route.params;
@@ -13,25 +13,35 @@ export default function AgendamentoResultado({route, navigation}) {
     const [companyList, setCompanyList] = useState([...data]);
     const api = axios.create({baseURL: 'http://localhost:8080'})
 
-
     const buscarMedicos = async (value) => {
         try {
             let token = await AsyncStorage.getItem('token');
 
+            console.log('Value')
+            console.log(value)
+
+            console.log('specialist')
+            console.log(value.doctorList[0].speciality)
+
             const req = await api.get('/user/company/doctor/avaliable_schedule/list', {
                 params: {
-                    day: datetime['day'],
-                    month: datetime['month'],
+                    day: 16,
+                    month: 10,
                     cnpj: value.cnpj,
-                    specialist: value.specialist
+                    specialist: value.doctorList[0].speciality
                 },
                 headers: {
                     Authorization: token
                 }
             })
 
-            navigation.navigate('AgendamentoMedico', { data: req.data }) ;
+            let resp = req.data
 
+            if (Array.isArray(resp) && resp.length) {
+                navigation.navigate('AgendamentoMedico', { data: req.data, cnpj: value.cnpj }) ;
+            } else {
+                alert('Não há especialista para essa data')
+            }
         } catch (err) {
             alert(err.response.data.message);
         }
@@ -41,18 +51,18 @@ export default function AgendamentoResultado({route, navigation}) {
     function results() {
         return companyList.map((obj, index) => {
             return (
-                <View style={styles.contentContainer}>
-                    <TouchableOpacity onPress={buscarMedicos}>
-                        <View style={styles.card}>
-                            <View style={styles.card.info}>
-                                <View style={styles.card.info.photo}>
-                                    <UserImg/>
+                <View style={estilo.contentContainer}>
+                    <TouchableOpacity onPress={() => { buscarMedicos(obj) } }>
+                        <View style={estilo.card}>
+                            <View style={estilo.card.info}>
+                                <View style={estilo.card.info.photo}>
+                                    <Image style={styles.imagemEmpresa} source={require('../assets/BeLive.png')} />
                                 </View>
 
-                                <View style={styles.card.info.data}>
-                                    <Text style={styles.card.info.text} key={index}><b>Nome</b>: {obj.name}</Text>
-                                    <Text style={styles.card.info.text} key={index}><b>CNPJ</b>: {obj.cnpj}</Text>
-                                    <Text style={styles.card.info.text} key={index}><b>CRM</b>: {obj.userLogin.username}</Text>
+                                <View style={estilo.card.info.data}>
+                                    <Text style={estilo.card.info.text} key={index}><b>Nome</b>: {obj.name}</Text>
+                                    <Text style={estilo.card.info.text} key={index}><b>CNPJ</b>: {obj.cnpj}</Text>
+                                    <Text style={estilo.card.info.text} key={index}><b>CRM</b>: {obj.userLogin.username}</Text>
                                 </View>
                             </View>
                         </View>
@@ -63,29 +73,24 @@ export default function AgendamentoResultado({route, navigation}) {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={estilo.container}>
             { results() }
         </View>
     )
 }
 
 
-const styles = StyleSheet.create({
-    container: {
+const estilo = StyleSheet.create({
+    contentContainer: {
         flex: 1,
-        width: '100%',
-        marginHorizontal: 20,
-        flexWrap: 'wrap'
+        paddingHorizontal:10,
+        justifyContent:'center'
     },
     title: {
         textAlign: "center",
         fontWeight: 'bold',
         marginTop: 20,
         fontSize: 25
-    },
-    contentContainer: {
-        flex: 1,
-        paddingHorizontal: 20
     },
     card: {
         display: 'flex',
@@ -101,19 +106,23 @@ const styles = StyleSheet.create({
         info: {
             display: 'flex',
             flexDirection: 'row',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between',
             text: {
-                fontSize: 18
+                fontSize: 14
             },
             photo: {
-                paddingHorizontal: 10
-
+                alignItems: 'center',
+                flex: .4
             },
             data: {
                 alignContent: 'center',
                 justifyContent: 'space-around',
-                marginVertical: 10
+                marginVertical: 10,
+                flex: 1,
+                paddingLeft: 20
             }
-
         },
         schedule: {
             flexDirection: 'row',
@@ -129,6 +138,26 @@ const styles = StyleSheet.create({
             fontWeight: 'bold',
             fontsize: 18,
             color: '#121212',
+        },
+        picker_view: {
+            width: '100%',
+            marginVertical: 10,
+            paddingHorizontal: 20,
+            picker: {
+                height: 50,
+                borderColor: '#D5D5D5',
+                borderWidth: 2,
+                padding: 5,
+                borderRadius: 5,
+                marginVertical: 10
+            }
+        },
+        texto: {
+            fontWeight: "bold",
+            fontSize: 18
+        },
+        marginButton: {
+            height: 500
         }
     }
 });

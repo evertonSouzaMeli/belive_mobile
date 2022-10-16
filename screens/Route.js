@@ -6,6 +6,7 @@ import Cadastro from './Cadastro';
 import Principal from './Principal';
 import Consulta from './Consulta';
 import AgendamentoResultado from "./AgendamentoResultado";
+import AgendamentoMedico from "./AgendamentoMedico";
 
 
 const Stack = createStackNavigator();
@@ -30,6 +31,7 @@ export default function MyStack() {
       <Stack.Screen name="Principal" component={Principal} />
       <Stack.Screen name="Consulta" component	={Consulta}/>
         <Stack.Screen name="AgendamentoResultado" component={AgendamentoResultado}/>
+        <Stack.Screen name ="AgendamentoMedico" component={AgendamentoMedico}/>
 
 
     </Stack.Navigator>

@@ -10,7 +10,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-export default function Agendamento( {navigation} ) {
+export default function Agendamento({navigation}) {
     const [especialidade, setEspecialidade] = useState("");
     const [datetime, setDatetime] = useState(null);
 
@@ -19,33 +19,36 @@ export default function Agendamento( {navigation} ) {
     const api = axios.create({baseURL: 'http://localhost:8080'})
 
     const buscar = async () => {
+
+        console.log('especialidade')
+        console.log(especialidade)
+
         try {
             let token = await AsyncStorage.getItem('token');
             let req = await api.get('user/company/get/available_company', {
-                params:{
-                    specialist: 'Cardiologista',
-                    day: 16,
-                    month: 10
-                },
-                headers: {
-                    Authorization: token,
-                    'Content-Type': 'application/json'
+                params: {
+                    specialist: especialidade, day: 16, month: 10
+                }, headers: {
+                    Authorization: token, 'Content-Type': 'application/json'
                 }
             });
 
             /**
-            navigation.reset({index: 0, routes: [{name: 'AgendamentoResultado.js', params: { data: req.data, date: datetime } }]});
-            **/
+             navigation.reset({index: 0, routes: [{name: 'AgendamentoResultado.js', params: { data: req.data, date: datetime } }]});
+             **/
 
             let resp = req.data
 
-            if(Array.isArray(resp) && resp.length){
-                navigation.navigate('AgendamentoResultado', { data: req.data, timestamp: datetime }) ;
-            }else{
+            console.log(req)
+            console.log(resp)
+
+            if (Array.isArray(resp) && resp.length) {
+                navigation.navigate('AgendamentoResultado', {data: req.data, timestamp: datetime});
+            } else {
                 alert('Não há especialista para essa data')
             }
 
-        }catch (err){
+        } catch (err) {
             alert(err.response.data.message);
         }
     }
@@ -64,27 +67,23 @@ export default function Agendamento( {navigation} ) {
                             selectedValue={especialidade}
                             style={stylesAgend.picker_view.picker}
                             onValueChange={(itemValue, itemIndex) => setEspecialidade(itemValue)}>
-                            {
-                                especialidades.map((item, index) => {
-                                    return <Picker.Item value={item} label={item} key={index}/>
-                                })
-                            }
+                            {especialidades.map((item, index) => {
+                                return <Picker.Item value={item} label={item} key={index}/>
+                            })}
                         </Picker>
                     </View>
-
 
 
                     <View style={stylesAgend.picker_view}>
                         <Text style={stylesAgend.texto}>Selecione a especialidade:</Text>
                         <Picker
                             selectedValue={especialidade}
+                            mode="dropdown"
                             style={stylesAgend.picker_view.picker}
                             onValueChange={(itemValue, itemIndex) => setEspecialidade(itemValue)}>
-                            {
-                                especialidades.map((item, index) => {
-                                    return <Picker.Item value={item} label={item} key={index}/>
-                                })
-                            }
+                            {especialidades.map((item, index) => {
+                                return <Picker.Item value={item} label={item} key={index}/>
+                            })}
                         </Picker>
                     </View>
 
@@ -96,10 +95,8 @@ export default function Agendamento( {navigation} ) {
                     />
                 </View>
             </ScrollView>
-        </KeyboardAvoidingView>
-    );
-}
-;
+        </KeyboardAvoidingView>);
+};
 
 const stylesAgend = StyleSheet.create({
     picker_view: {

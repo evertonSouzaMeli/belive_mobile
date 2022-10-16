@@ -8,6 +8,11 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
   },
+  imagemEmpresa: {
+    width: 100,
+    height: 100,
+  },
+
     imagemHome: {
     width: 150,
     height: 150,
@@ -25,22 +30,6 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     paddingHorizontal: 24,
   },
-
-  maskedInput: {
-      flexGrow: 1,
-      height: 40,
-      fontSize: 18,
-      borderBottomColor: "#999",
-      borderBottomWidth: 1,
-      borderStyle: "solid",
-      alignSelf: "flex-start"
-    },
-      containerMask: {
-      flexDirection: "row",
-      marginBottom: 5,
-      marginLeft: 10,
-      marginRight: 10
-    },
 
   visao: {
     width: '100%',

@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from "axios";
 
 
-export default function Home() {
+export default function Home({ navigation }) {
     const [user, setUser] = useState({
         name: ''
     });
@@ -39,12 +39,11 @@ export default function Home() {
 
     return (
         <View style={styles.homeContainer}>
-
-            <View style={{marginTop: 40, flex: 1}}>
-                <Text style={estilo.texto}>Bem-vindo(a), {user.name}!</Text>
-            </View>
-            <View style={{flex: 2, marginBotton: 15}}>
+            <View style={{marginTop: 20, marginBottom: 20, flex: 2}}>
                 <ImageCarousel/>
+            </View>
+            <View style={{flex: 1, marginBotton: 15, marginTop: 15}}>
+                <Text style={estilo.texto}>Bem-vindo(a), {user.name}!</Text>
             </View>
         </View>
     );
