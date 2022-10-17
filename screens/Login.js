@@ -18,7 +18,7 @@ export default function Login({ navigation }) {
     senha: '',
   });
 
-  const api = axios.create({baseURL: 'http://localhost:8080'})
+  const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
 
   const loadData = () => {
     const email = route.params.email;

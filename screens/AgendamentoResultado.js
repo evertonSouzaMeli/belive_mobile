@@ -9,7 +9,7 @@ export default function AgendamentoResultado({route, navigation}) {
 
     const [company, setCompany] = useState({})
     const [companyList, setCompanyList] = useState([...data]);
-    const api = axios.create({baseURL: 'http://localhost:8080'})
+    const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
 
 
     const addPlaceholderAvailableSchedule = (value) => {

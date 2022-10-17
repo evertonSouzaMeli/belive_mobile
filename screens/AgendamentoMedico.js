@@ -12,7 +12,7 @@ export default function AgendamentoMedico({navigation, route}) {
     const [doctorList, setDoctorList] = useState([...data]);
     const [timestamp, setTimestamp] = useState({key: 0, date: null});
 
-    const api = axios.create({baseURL: 'http://localhost:8080'})
+    const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
 
 
     const marcarConsulta = async (value) => {
@@ -28,11 +28,11 @@ export default function AgendamentoMedico({navigation, route}) {
                 startOfAppointment: timestamp.date
             }
 
-            const req = await api.post('http://localhost:8080/appointment/create', obj, {
+            const req = await api.post('/appointment/create', obj, {
                 headers: {
                     Authorization: token,
                     'Content-Type': 'application/json'
-                }
+                },
             })
 
             alert('Consulta marcada com sucesso!')

@@ -4,7 +4,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Login from './Login';
 import Cadastro from './Cadastro';
 import Principal from './Principal';
-import Consulta from './Consulta';
 import AgendamentoResultado from "./AgendamentoResultado";
 import AgendamentoMedico from "./AgendamentoMedico";
 import EditarPerfil from "./EditarPerfil";
@@ -31,13 +30,10 @@ export default function MyStack() {
             <Stack.Screen name="Login" component={Login}/>
             <Stack.Screen name="Cadastro" component={Cadastro}/>
             <Stack.Screen name="Principal" component={Principal}/>
-            <Stack.Screen name="Consulta" component={Consulta}/>
             <Stack.Screen name="AgendamentoResultado" component={AgendamentoResultado}/>
             <Stack.Screen name="AgendamentoMedico" component={AgendamentoMedico}/>
             <Stack.Screen name="EditarPerfil" component={EditarPerfil}/>
             <Stack.Screen name="Perfil" component={Perfil}/>
-
-
         </Stack.Navigator>
     );
 }

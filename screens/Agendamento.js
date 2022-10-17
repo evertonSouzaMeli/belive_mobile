@@ -1,10 +1,8 @@
-import React, {useState, useCallback} from "react";
+import React, {useState} from "react";
 import styles from '../style/MainStyle';
-import {StyleSheet, Text, View, Button, TextInput} from "react-native";
+import {Button, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, View} from "react-native";
 import {Picker} from "@react-native-picker/picker";
 import {ScrollView} from 'react-native-gesture-handler';
-import {KeyboardAvoidingView} from 'react-native';
-import {Platform} from 'react-native';
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -18,7 +16,7 @@ export default function Agendamento({navigation}) {
 
     const months = ['--Nenhum---', 'JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO', 'JULHO', 'AGOSTO', 'SETEMBRO', 'OUTUBRO', 'NOVEMBRO', 'DEZEMBRO']
 
-    const api = axios.create({baseURL: 'http://localhost:8080'})
+    const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
 
     const transformMonth = (month) => {
         let monthValue = 0;

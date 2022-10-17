@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, StyleSheet, Button, TextInput} from 'react-native';
+import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserImg from '../components/UserImg';
 import styles from '../style/MainStyle';
@@ -12,7 +12,7 @@ export default function EditarPerfil({navigation, route}) {
     const [phone, setPhone] = useState('')
 
     let telefoneField = null;
-    const api = axios.create({baseURL: 'http://localhost:8080'})
+    const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
 
 
     useEffect(() => {
