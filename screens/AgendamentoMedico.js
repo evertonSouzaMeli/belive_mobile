@@ -56,9 +56,9 @@ export default function AgendamentoMedico({navigation, route}) {
                             </View>
 
                             <View style={estilo.card.info.data}>
-                                <Text style={estilo.card.info.text} key={index}><b>Nome</b>: {obj.name}</Text>
-                                <Text style={estilo.card.info.text} key={index}><b>CRM</b>: {obj.crm}</Text>
-                                <Text style={estilo.card.info.text} key={index}><b>Especialidade</b>: {obj.speciality}
+                                <Text style={estilo.card.info.text} key={index}>Nome: {obj.name}</Text>
+                                <Text style={estilo.card.info.text} key={index}>CRM: {obj.crm}</Text>
+                                <Text style={estilo.card.info.text} key={index}>Especialidade: {obj.speciality}
                                 </Text>
                             </View>
 
@@ -71,6 +71,7 @@ export default function AgendamentoMedico({navigation, route}) {
                                 style={estilo.picker_view.picker}
                                 onValueChange={(itemValue, itemIndex) => {
                                     setTimestamp({key: itemIndex, date: itemValue});
+                                    
                                 }}>
                                 {obj.scheduleAvailable.map( (item, index) => {
                                     return <Picker.Item value={item} label={item} key={index}/>
@@ -89,7 +90,7 @@ export default function AgendamentoMedico({navigation, route}) {
     }
 
     return (
-        <View>
+        <View style ={estilo.contentContainer}>
             {results()}
         </View>
     )
@@ -100,12 +101,6 @@ const estilo = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 10,
         justifyContent: 'center'
-    },
-    title: {
-        textAlign: "center",
-        fontWeight: 'bold',
-        marginTop: 20,
-        fontSize: 25
     },
     card: {
         display: 'flex',
@@ -154,25 +149,5 @@ const estilo = StyleSheet.create({
             fontsize: 18,
             color: '#121212',
         }
-    },
-    picker_view: {
-        width: '100%',
-        marginVertical: 10,
-        paddingHorizontal: 20,
-        picker: {
-            height: 50,
-            borderColor: '#D5D5D5',
-            borderWidth: 2,
-            padding: 5,
-            borderRadius: 5,
-            marginVertical: 10
-        }
-    },
-    texto: {
-        fontWeight: "bold",
-        fontSize: 18
-    },
-    marginButton: {
-        height: 500
     }
 });

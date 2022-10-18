@@ -5,6 +5,8 @@ import UserImg from '../components/UserImg';
 import styles from '../style/MainStyle';
 import axios from "axios";
 import {TextInputMask} from "react-native-masked-text";
+import {ScrollView} from 'react-native-gesture-handler';
+
 
 export default function EditarPerfil({navigation, route}) {
     const {data} = route.params;
@@ -41,7 +43,7 @@ export default function EditarPerfil({navigation, route}) {
     }
 
     return (
-        <View
+        <ScrollView 
             style={{
                 flex: 1,
                 width: '100%',
@@ -50,19 +52,19 @@ export default function EditarPerfil({navigation, route}) {
                 backgroundColor: '#fff',
             }}>
             <View style={{flex: 1, marginHorizontal: 20}}>
-                <View style={{flex: 1, alignItems: 'center', marginTop: 30}}>
+                <View style={{flex: 2, alignItems: 'center', marginTop: 5}}>
                     <UserImg/>
                 </View>
 
                 <View
                     style={specificStyle.specificContainer}>
 
-                    <Text style={{fontWeight: 'bold', fontSize: 16}}>Insira os dados abaixo: </Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 16}}>Insira os dados abaixo: </Text>
                 </View>
 
                 <View
                     style={[styles.containerMask2, specificStyle.specificContainer]}>
-                    <Text style={{fontWeight: 'bold', fontSize: 14}}>Nome: </Text>
+                    <Text style={{fontWeight: 'bold', fontSize: 14, paddingTop:5}}>Nome: </Text>
                     <TextInput value={name} onChangeText={value => {
                         setName(value)
                     }}/>
@@ -70,7 +72,7 @@ export default function EditarPerfil({navigation, route}) {
 
                 <View
                     style={[styles.containerMask2, specificStyle.specificContainer]}>
-                    <Text style={{fontWeight: 'bold', fontSize: 14 }}>Telefone: </Text>
+                    <Text style={{fontWeight: 'bold', fontSize: 14, paddingTop:10 }}>Telefone: </Text>
                     <TextInputMask
                         value={phone}
                         type={'cel-phone'}
@@ -102,7 +104,7 @@ export default function EditarPerfil({navigation, route}) {
                 </View>
 
             </View>
-        </View>
+        </ScrollView>
 
     )
 }

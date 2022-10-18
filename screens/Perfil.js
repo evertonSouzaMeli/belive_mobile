@@ -21,7 +21,7 @@ export default function Perfil({navigation}) {
 
     useEffect(() => {
         refreshData();
-    }, []);
+    });
 
     const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
 
@@ -139,47 +139,3 @@ export default function Perfil({navigation}) {
         </View>
     );
 }
-
-const specificStyle = StyleSheet.create({
-    campo: {
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        marginVertical: 10,
-        marginHorizontal: 20
-    },
-    texto: {
-        fontWeight: 'bold',
-        fontSize: 18,
-    },
-    texto2: {
-        fontSize: 18,
-        fontWeight: '',
-        color: 'grey',
-    },
-    cont1: {
-        flex: 1,
-    },
-    centeredView: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 22,
-    },
-    button: {
-        backgroundColor: 'lightblue',
-        padding: 12,
-        margin: 16,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 4,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
-    },
-    modalContent: {
-        backgroundColor: 'white',
-        padding: 22,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 4,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
-    },
-});

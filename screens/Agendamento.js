@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React, {useState, useCallback} from "react";
 import styles from '../style/MainStyle';
-import {Button, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, View} from "react-native";
+import {StyleSheet, Text, View, Button, TextInput} from "react-native";
 import {Picker} from "@react-native-picker/picker";
 import {ScrollView} from 'react-native-gesture-handler';
+import {KeyboardAvoidingView} from 'react-native';
+import {Platform} from 'react-native';
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -85,7 +87,7 @@ export default function Agendamento({navigation}) {
             let resp = req.data
 
             if (Array.isArray(resp) && resp.length) {
-                navigation.navigate('AgendamentoResultado', {data: req.data, day: obj.day, month: obj.month });
+                navigation.navigate('AgendamentoResultado', {data: req.data, day: obj.day, month: obj.month});
             } else {
                 alert('Não há especialista para essa data')
             }
@@ -130,7 +132,9 @@ export default function Agendamento({navigation}) {
 
                     <View style={stylesAgend.picker_view}>
                         <Text style={stylesAgend.texto}>Insira um dia:</Text>
-                        <TextInput placeholder={"Insira um dia valido"} onChangeText={ value => { setDay(value)}}/>
+                        <TextInput placeholder={"Insira um dia valido"} onChangeText={value => {
+                            setDay(value)
+                        }}/>
                     </View>
 
 
@@ -143,7 +147,7 @@ export default function Agendamento({navigation}) {
                 </View>
             </ScrollView>
         </KeyboardAvoidingView>);
-};
+}
 
 const stylesAgend = StyleSheet.create({
     picker_view: {

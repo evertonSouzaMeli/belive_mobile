@@ -72,9 +72,9 @@ export default function AgendamentoResultado({route, navigation}) {
                                 </View>
 
                                 <View style={estilo.card.info.data}>
-                                    <Text style={estilo.card.info.text} key={index}><b>Nome</b>: {obj.name}</Text>
-                                    <Text style={estilo.card.info.text} key={index}><b>CNPJ</b>: {obj.cnpj}</Text>
-                                    <Text style={estilo.card.info.text} key={index}><b>CRM</b>: {obj.userLogin.username}</Text>
+                                    <Text style={estilo.card.info.text} key={index}>Nome: {obj.name}</Text>
+                                    <Text style={estilo.card.info.text} key={index}>CNPJ: {obj.cnpj}</Text>
+                                    <Text style={estilo.card.info.text} key={index}>CRM: {obj.userLogin.username}</Text>
                                 </View>
                             </View>
                         </View>
@@ -85,7 +85,7 @@ export default function AgendamentoResultado({route, navigation}) {
     }
 
     return (
-        <View style={estilo.container}>
+        <View style={estilo.contentContainer}>
             { results() }
         </View>
     )
@@ -98,12 +98,7 @@ const estilo = StyleSheet.create({
         paddingHorizontal:10,
         justifyContent:'center'
     },
-    title: {
-        textAlign: "center",
-        fontWeight: 'bold',
-        marginTop: 20,
-        fontSize: 25
-    },
+ 
     card: {
         display: 'flex',
         flexWrap: 'wrap',
