@@ -10,7 +10,7 @@ import {Picker} from "@react-native-picker/picker";
 export default function AgendamentoMedico({navigation, route}) {
     const {data, cnpj} = route.params;
     const [doctorList, setDoctorList] = useState([...data]);
-    const [timestamp, setTimestamp] = useState({key: 0, date: null});
+    const [timestamp, setTimestamp] = useState({key: 0, date: ''});
 
     const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
 
@@ -66,12 +66,11 @@ export default function AgendamentoMedico({navigation, route}) {
                         </View>
                         <View>
                             <Picker
-                                selectedValue={timestamp[index]}
+                                selectedValue={timestamp.date}
                                 mode="dropdown"
-                                style={estilo.picker_view.picker}
                                 onValueChange={(itemValue, itemIndex) => {
                                     setTimestamp({key: itemIndex, date: itemValue});
-                                    
+
                                 }}>
                                 {obj.scheduleAvailable.map( (item, index) => {
                                     return <Picker.Item value={item} label={item} key={index}/>
