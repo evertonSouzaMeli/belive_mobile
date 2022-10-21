@@ -13,6 +13,10 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
   },
+  imagemConsulta: {
+    width: 70,
+    height: 70,
+  },
 
     imagemHome: {
     width: 150,
@@ -45,7 +49,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   buttonApagar: {
-    backgroundColor: '#FF0000',
+    backgroundColor: '#ef5858',
     marginTop: 20,
     textAlign: 'center',
     alignContent: 'center',

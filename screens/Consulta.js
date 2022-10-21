@@ -1,18 +1,16 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
-import {useRoute} from '@react-navigation/native';
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, Pressable, StyleSheet, View} from 'react-native';
 import {Button, Input, Text} from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from '../style/MainStyle';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Picker} from "@react-native-picker/picker";
 
 export default function Consulta({navigation}) {
     const [appointmentList, setAppointmentList] = useState([])
     const [active, setActive] = useState(false)
-    const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
+    //const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
+    const api = axios.create({baseURL: 'https://localhost:8080'})
 
     useEffect(() => {
         refreshData();
@@ -26,7 +24,7 @@ export default function Consulta({navigation}) {
         try {
             let token = await AsyncStorage.getItem('token');
 
-            alert(token)
+            console.log(value.code)
 
             let req = await api.get('/appointment/cancel', {
                 headers: {
@@ -39,14 +37,14 @@ export default function Consulta({navigation}) {
 
             refreshData();
         } catch (err) {
+            alert(err.response.data.message)
             console.log(err.response.data.message)
-            alert(err.response.data.message);
         }
     }
 
     const refreshData = async () => {
         try {
-            let token = AsyncStorage.getItem('token');
+            let token = await AsyncStorage.getItem('token');
             let req = await api.get('/appointment/get/list', {
                 headers: {
                     Authorization: token,
@@ -64,6 +62,37 @@ export default function Consulta({navigation}) {
         }
     }
 
+    const getStatus = (value) => {
+        let pill;
+        let status;
+        let info;
+
+        switch (value) {
+            case "IN_PROGRESS":
+                pill = {backgroundColor: '#4494ef', borderRadius: 50, padding: 5}
+                info = {color: '#ffffff', fontWeight: 'bold', fontSize: 10}
+                status = "EM PROGRESSO"
+                break;
+            case "CANCELLED":
+                pill = {backgroundColor: '#ef5858', borderRadius: 50, padding: 5}
+                info = {color: '#ffffff', fontWeight: 'bold', fontSize: 10}
+                status = "CANCELADA"
+                break;
+            default :
+                pill = {backgroundColor: 'grey', borderRadius: 50, padding: 5}
+                info = {color: '#000000', fontWeight: 'bold', fontSize: 10}
+
+                status = "NÃO DEFINIDO"
+                break;
+        }
+
+        return (
+            <View style={pill}>
+                <Text style={info}>{status}</Text>
+            </View>
+        )
+    }
+
     /** function results() {   **/
     return appointmentList.map((obj, index) => {
         return (
@@ -71,28 +100,43 @@ export default function Consulta({navigation}) {
                 <View style={estilo.card}>
                     <View style={estilo.card.info}>
                         <View style={estilo.card.info.photo}>
-                            <Image style={styles.imagemEmpresa} source={require('../assets/BeLive.png')}/>
+                            <Image style={styles.imagemConsulta} source={require('../assets/BeLive.png')}/>
                         </View>
 
                         <View style={estilo.card.info.data}>
-                            <Text style={estilo.card.info.text} key={index}>Nome: {obj.doctor.name}</Text>
-                            <Text style={estilo.card.info.text} key={index}>CRM: {obj.doctor.crm}</Text>
-                            <Text style={estilo.card.info.text} key={index}>Especialidade: {obj.doctor.speciality}
-                            </Text>
+                            <View style={{ marginBottom: 3}}>
+                                <Text style={estilo.card.info.text_code} key={index}>Código: {obj.code}</Text>
+                            </View>
+                            <View>
+                                <Text style={estilo.card.info.text} key={index}>{obj.doctor.name}</Text>
+                            </View>
+                            <View>
+                                <Text style={estilo.card.info.text} key={index}>CRM: {obj.doctor.crm}</Text>
+                            </View>
+                            <View>
+                                <Text style={estilo.card.info.text} key={index}>Especialidade: {obj.doctor.speciality}
+                                </Text>
+                            </View>
                         </View>
+                        {
+                            getStatus(obj.appointmentStatus)
+                        }
                     </View>
                     <View style={{
                         marginVertical: 5,
                         paddingVertical: 3,
-                        borderWidth: 2,
-                        borderColor: '#BBBBBB',
                         borderRadius: 5
                     }}>
                     </View>
+
                     <View>
-                        <Button title="Editar" onPress={() => {
-                            cancelAppointment(obj);
-                        }}/>
+                        {
+                            obj.appointmentStatus !== 'CANCELLED'
+                                ? <Button title="Cancelar" buttonStyle={{backgroundColor: "#ef5858"}} onPress={() => {
+                                    cancelAppointment(obj);
+                                }}/>
+                                : <Button title="Cancelar" buttonStyle={{backgroundColor: "grey"}}/>
+                        }
                     </View>
                 </View>
             </View>
@@ -132,7 +176,12 @@ const estilo = StyleSheet.create({
             alignItems: 'center',
             justifyContent: 'space-between',
             text: {
-                fontSize: 14
+                fontSize: 14,
+                fontWeight: 'bold'
+            },
+            text_code: {
+                fontSize: 14,
+                color: 'grey'
             },
             photo: {
                 alignItems: 'center',
@@ -140,7 +189,7 @@ const estilo = StyleSheet.create({
             },
             data: {
                 alignContent: 'center',
-                justifyContent: 'space-around',
+
                 marginVertical: 10,
                 flex: 1,
                 paddingLeft: 20
