@@ -9,7 +9,7 @@ export default function AgendamentoResultado({route, navigation}) {
 
     const [company, setCompany] = useState({})
     const [companyList, setCompanyList] = useState([...data]);
-    const api = axios.create({baseURL: 'http://localhost:8080'})
+    const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
 
 
     const addPlaceholderAvailableSchedule = (value) => {
@@ -28,13 +28,7 @@ export default function AgendamentoResultado({route, navigation}) {
     const buscarMedicos = async (value) => {
         try {
             let token = await AsyncStorage.getItem('token');
-
-            console.log('Value')
-            console.log(value)
-
-            console.log('specialist')
-            console.log(value.doctorList[0].speciality)
-
+            
             const req = await api.get('/user/company/doctor/avaliable_schedule/list', {
                 params: {
                     day: day,
@@ -72,9 +66,9 @@ export default function AgendamentoResultado({route, navigation}) {
                                 </View>
 
                                 <View style={estilo.card.info.data}>
-                                    <Text style={estilo.card.info.text} key={index}><b>Nome</b>: {obj.name}</Text>
-                                    <Text style={estilo.card.info.text} key={index}><b>CNPJ</b>: {obj.cnpj}</Text>
-                                    <Text style={estilo.card.info.text} key={index}><b>CRM</b>: {obj.userLogin.username}</Text>
+                                    <Text style={estilo.card.info.text} key={index}>Nome: {obj.name}</Text>
+                                    <Text style={estilo.card.info.text} key={index}>CNPJ: {obj.cnpj}</Text>
+                                    <Text style={estilo.card.info.text} key={index}>CRM: {obj.userLogin.username}</Text>
                                 </View>
                             </View>
                         </View>
@@ -85,7 +79,7 @@ export default function AgendamentoResultado({route, navigation}) {
     }
 
     return (
-        <View style={estilo.container}>
+        <View style={estilo.contentContainer}>
             { results() }
         </View>
     )
@@ -98,12 +92,7 @@ const estilo = StyleSheet.create({
         paddingHorizontal:10,
         justifyContent:'center'
     },
-    title: {
-        textAlign: "center",
-        fontWeight: 'bold',
-        marginTop: 20,
-        fontSize: 25
-    },
+ 
     card: {
         display: 'flex',
         flexWrap: 'wrap',

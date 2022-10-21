@@ -13,7 +13,7 @@ import ButtonMic from '../components/ButtonMic';
 const Tab = createBottomTabNavigator();
 
 export default function Principal({navigaton}) {
-  
+
   return (
   <Tab.Navigator
       initialRouteName="Home"
@@ -21,7 +21,7 @@ export default function Principal({navigaton}) {
         tabBarInactiveTintColor: '#121212',
         tabBarActiveTintColor: '#1E90FF',
         headerShown: false,
-      tabBarStyle: { 
+      tabBarStyle: {
         paddingBottom: 5,
         paddingTop: 5
         }
@@ -80,5 +80,3 @@ export default function Principal({navigaton}) {
     </Tab.Navigator>
   );
 }
-
-

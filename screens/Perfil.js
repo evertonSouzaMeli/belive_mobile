@@ -23,7 +23,7 @@ export default function Perfil({navigation}) {
         refreshData();
     }, []);
 
-    const api = axios.create({baseURL: 'http://localhost:8080'})
+    const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
 
     const pageEdit = () => {
         let { name, phone, userLogin } =  user
@@ -84,7 +84,7 @@ export default function Perfil({navigation}) {
                 backgroundColor: '#fff',
             }}>
             <View style={{flex:1, marginHorizontal:20}}>
-                <View style={{ flex: 1, alignItems:'center', marginTop:30 }}>
+                <View style={{ flex: 1, alignItems:'center'}}>
                     <UserImg />
                 </View>
 

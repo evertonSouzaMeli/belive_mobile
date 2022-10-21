@@ -10,8 +10,8 @@ const styles = StyleSheet.create({
     height: 200,
   },
   imagemEmpresa: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
   },
 
     imagemHome: {
@@ -120,8 +120,7 @@ const styles = StyleSheet.create({
   },
   maskedInput2: {
     flexGrow: 1,
-    height: 40,
-    fontSize: 18,
+    fontSize: 14,
     alignSelf: 'flex-start',
   },
 

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, StyleSheet, Button, TouchableOpacity, TextInput} from 'react-native';
+import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserImg from '../components/UserImg';
 import styles from '../style/MainStyle';
@@ -12,18 +12,18 @@ export default function EditarPerfil({navigation, route}) {
     const [phone, setPhone] = useState('')
 
     let telefoneField = null;
-    const api = axios.create({baseURL: 'http://localhost:8080'})
+    const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
 
 
     useEffect(() => {
         setName(data.name)
         setPhone(data.phone)
-    },[])
+    }, [])
 
     const updateData = async () => {
         try {
             const token = await AsyncStorage.getItem('token');
-            const req = await api.patch('/user/customer/update', { name, phone }, {
+            const req = await api.patch('/user/customer/update', {name, phone}, {
                 headers: {
                     Authorization: token,
                     'Content-Type': 'application/json'
@@ -36,14 +36,11 @@ export default function EditarPerfil({navigation, route}) {
         }
     }
 
-    const voltar = () =>{
+    const voltar = () => {
         navigation.reset({index: 0, routes: [{name: 'Principal'}]});
     }
 
     return (
-
-
-
         <View
             style={{
                 flex: 1,
@@ -52,26 +49,28 @@ export default function EditarPerfil({navigation, route}) {
                 alignContent: 'center',
                 backgroundColor: '#fff',
             }}>
-            <View style={{flex:1, marginHorizontal:20}}>
-                <View style={{ flex: 1, alignItems:'center', marginTop:30 }}>
-                    <UserImg />
+            <View style={{flex: 1, marginHorizontal: 20}}>
+                <View style={{flex: 1, alignItems: 'center', marginTop: 30}}>
+                    <UserImg/>
                 </View>
 
                 <View
                     style={specificStyle.specificContainer}>
 
-                    <Text style={{fontWeight:'bold', fontSize:16}}>Insira os dados abaixo: </Text>
+                    <Text style={{fontWeight: 'bold', fontSize: 16, paddingTop:7}}>Insira os dados abaixo: </Text>
                 </View>
 
                 <View
-                    style={specificStyle.specificContainer}>
-                    <Text style={{fontWeight:'bold', fontSize:14}}>Nome: </Text>
-                    <TextInput value={ name } onChangeText={ value => { setName( value) }} />
+                    style={[styles.containerMask2, specificStyle.specificContainer]}>
+                    <Text style={{fontWeight: 'bold', fontSize: 14, paddingTop:7}}>Nome: </Text>
+                    <TextInput value={name} onChangeText={value => {
+                        setName(value)
+                    }}/>
                 </View>
 
                 <View
-                    style={[styles.containerMask2,specificStyle.specificContainer ]}>
-                    <Text style={{fontWeight:'bold', fontSize:14}}>Telefone: </Text>
+                    style={[styles.containerMask2, specificStyle.specificContainer]}>
+                    <Text style={{fontWeight: 'bold', fontSize: 14, paddingTop:7 }}>Telefone: </Text>
                     <TextInputMask
                         value={phone}
                         type={'cel-phone'}
@@ -80,7 +79,9 @@ export default function EditarPerfil({navigation, route}) {
                             withDDD: true,
                             dddMask: '(99) ',
                         }}
-                        onChangeText={ value => { setPhone(value) }}
+                        onChangeText={value => {
+                            setPhone(value)
+                        }}
                         keyboardType="phone-pad"
                         returnKeyType="done"
                         style={styles.maskedInput2}
@@ -89,13 +90,12 @@ export default function EditarPerfil({navigation, route}) {
                 </View>
 
 
-
-                <View style={{ flex: 1, marginTop:15 }}>
+                <View style={{flex: 1, marginTop: 15}}>
                     <Button title={"Enviar"} onPress={() => {
                         updateData()
                     }}/>
                 </View>
-                <View style={{ flex: 1, marginTop:15 }}>
+                <View style={{flex: 1, marginTop: 15}}>
                     <Button title={"Voltar"} onPress={() => {
                         voltar()
                     }}/>
@@ -104,11 +104,11 @@ export default function EditarPerfil({navigation, route}) {
             </View>
         </View>
 
-    )}
+    )
+}
+
 const specificStyle = StyleSheet.create({
     specificContainer: {
-        flexDirection: 'row', justifyContent: 'space-between', marginBottom:15
-    },
-
+        flexDirection: 'row', justifyContent: 'flex-start', marginBottom: 15
+    }
 })
-

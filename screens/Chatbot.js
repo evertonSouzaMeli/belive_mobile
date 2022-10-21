@@ -48,10 +48,6 @@ export default function App() {
                 { headers: { Authorization: `Basic ${encodedKey}`, 'Content-Type': 'application/json' } });
 
             const response = request.data.output.text[0]
-            const x = especialidades.map( string => {
-                response.includes(string)
-            })
-
 
             if(response.includes('especialidade'))
 

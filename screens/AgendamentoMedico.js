@@ -10,15 +10,14 @@ import {Picker} from "@react-native-picker/picker";
 export default function AgendamentoMedico({navigation, route}) {
     const {data, cnpj} = route.params;
     const [doctorList, setDoctorList] = useState([...data]);
-    const [timestamp, setTimestamp] = useState({key: 0, date: null});
+    const [timestampList, setTimestampList] = useState([{}])
+    const [timestamp, setTimestamp] = useState({});
 
-    const api = axios.create({baseURL: 'http://localhost:8080'})
+    const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
 
-
-    const marcarConsulta = async (value) => {
+    const marcarConsulta = async (index, value) => {
         try {
-            alert(timestamp.date)
-
+            let date = findById(index);
             let token = await AsyncStorage.getItem('token');
             let obj = {
                 companyDTO: {
@@ -27,14 +26,14 @@ export default function AgendamentoMedico({navigation, route}) {
                 doctor: {
                     crm: value.crm
                 },
-                startOfAppointment: timestamp.date
+                startOfAppointment: date
             }
 
-            const req = await api.post('http://localhost:8080/appointment/create', obj, {
+            const req = await api.post('/appointment/create', obj, {
                 headers: {
                     Authorization: token,
                     'Content-Type': 'application/json'
-                }
+                },
             })
 
             alert('Consulta marcada com sucesso!')
@@ -45,6 +44,16 @@ export default function AgendamentoMedico({navigation, route}) {
             console.log(err.response)
             alert(err.response.data.message);
         }
+    }
+
+    const findById = (index) => {
+        return timestampList[index];
+    }
+
+    const save = (index, value) => {
+        let tempList = [...timestampList]
+        tempList.splice(index, 1, value)
+        setTimestampList(tempList);
     }
 
     function results() {
@@ -58,30 +67,34 @@ export default function AgendamentoMedico({navigation, route}) {
                             </View>
 
                             <View style={estilo.card.info.data}>
-                                <Text style={estilo.card.info.text} key={index}><b>Nome</b>: {obj.name}</Text>
-                                <Text style={estilo.card.info.text} key={index}><b>CRM</b>: {obj.crm}</Text>
-                                <Text style={estilo.card.info.text} key={index}><b>Especialidade</b>: {obj.speciality}
+                                <Text style={estilo.card.info.text} key={index}>Nome: {obj.name}</Text>
+                                <Text style={estilo.card.info.text} key={index}>CRM: {obj.crm}</Text>
+                                <Text style={estilo.card.info.text} key={index}>Especialidade: {obj.speciality}
                                 </Text>
                             </View>
-
-
                         </View>
-                        <View>
+                        <View style={{
+                            marginVertical: 5,
+                            paddingVertical: 3,
+                            borderWidth: 2,
+                            borderColor: '#BBBBBB',
+                            borderRadius: 5
+                        }}>
                             <Picker
-                                selectedValue={timestamp[index]}
+                                selectedValue={findById(index)}
                                 mode="dropdown"
-                                style={estilo.picker_view.picker}
+                                itemStyle={{backgroundColor: "grey", color: "blue", fontFamily: "Ebrima", fontSize: 17}}
                                 onValueChange={(itemValue, itemIndex) => {
-                                    setTimestamp({key: itemIndex, date: itemValue});
+                                    save(index, itemValue)
                                 }}>
-                                {obj.scheduleAvailable.map( (item, index) => {
+                                {obj.scheduleAvailable.map((item, index) => {
                                     return <Picker.Item value={item} label={item} key={index}/>
                                 })}
                             </Picker>
                         </View>
                         <View>
                             <Button title="Confirmar" onPress={() => {
-                                marcarConsulta(obj)
+                                marcarConsulta(index, obj)
                             }}/>
                         </View>
                     </View>
@@ -91,7 +104,7 @@ export default function AgendamentoMedico({navigation, route}) {
     }
 
     return (
-        <View>
+        <View style={estilo.contentContainer}>
             {results()}
         </View>
     )
@@ -102,12 +115,6 @@ const estilo = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 10,
         justifyContent: 'center'
-    },
-    title: {
-        textAlign: "center",
-        fontWeight: 'bold',
-        marginTop: 20,
-        fontSize: 25
     },
     card: {
         display: 'flex',
@@ -156,25 +163,5 @@ const estilo = StyleSheet.create({
             fontsize: 18,
             color: '#121212',
         }
-    },
-    picker_view: {
-        width: '100%',
-        marginVertical: 10,
-        paddingHorizontal: 20,
-        picker: {
-            height: 50,
-            borderColor: '#D5D5D5',
-            borderWidth: 2,
-            padding: 5,
-            borderRadius: 5,
-            marginVertical: 10
-        }
-    },
-    texto: {
-        fontWeight: "bold",
-        fontSize: 18
-    },
-    marginButton: {
-        height: 500
     }
 });

@@ -41,7 +41,7 @@ export default function ImageCarousel(props) {
         onPress={() => {
           carouselRef.current.scrollToIndex(index);
         }}>
-       
+
         <ImageBackground
           source={{ uri: uri }}
           style={styles.imageBackground}></ImageBackground>
