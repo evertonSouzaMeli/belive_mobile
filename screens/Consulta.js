@@ -9,8 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Consulta({navigation}) {
     const [appointmentList, setAppointmentList] = useState([])
     const [active, setActive] = useState(false)
-    //const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
-    const api = axios.create({baseURL: 'https://localhost:8080'})
+    const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
 
     useEffect(() => {
         refreshData();
@@ -71,7 +70,7 @@ export default function Consulta({navigation}) {
             case "IN_PROGRESS":
                 pill = {backgroundColor: '#4494ef', borderRadius: 50, padding: 5}
                 info = {color: '#ffffff', fontWeight: 'bold', fontSize: 10}
-                status = "EM PROGRESSO"
+                status = "EM ABERTO"
                 break;
             case "CANCELLED":
                 pill = {backgroundColor: '#ef5858', borderRadius: 50, padding: 5}
@@ -117,6 +116,9 @@ export default function Consulta({navigation}) {
                                 <Text style={estilo.card.info.text} key={index}>Especialidade: {obj.doctor.speciality}
                                 </Text>
                             </View>
+                            <View  style={{ marginVertical: 5}}>
+                                <Text style={estilo.card.info.text}  key={index}>Data: {obj.startOfAppointment.replaceAll('-','/')}</Text>
+                            </View>
                         </View>
                         {
                             getStatus(obj.appointmentStatus)
@@ -154,25 +156,25 @@ export default function Consulta({navigation}) {
 
 const estilo = StyleSheet.create({
     contentContainer: {
-        flex: 1,
         paddingHorizontal: 10,
-        justifyContent: 'center'
+        justifyContent: 'flex-start'
     },
     card: {
         display: 'flex',
-        flexWrap: 'wrap',
+        flexWrap: 'nowrap',
         backgroundColor: '#fbfbfb',
         marginVertical: 20,
         borderRadius: 10,
         shadowColor: '#171717',
-        shadowOffset: {width: -2, height: 4},
+        shadowOffset: {width: -3, height: 6},
         shadowOpacity: 0.2,
         shadowRadius: 3,
         padding: 10,
+
         info: {
             display: 'flex',
             flexDirection: 'row',
-            flexWrap: 'wrap',
+            flexWrap: 'nowrap',
             alignItems: 'center',
             justifyContent: 'space-between',
             text: {

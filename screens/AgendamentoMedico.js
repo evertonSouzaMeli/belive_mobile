@@ -112,7 +112,6 @@ export default function AgendamentoMedico({navigation, route}) {
 
 const estilo = StyleSheet.create({
     contentContainer: {
-        flex: 1,
         paddingHorizontal: 10,
         justifyContent: 'center'
     },
