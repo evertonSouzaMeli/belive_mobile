@@ -13,15 +13,14 @@ export default function Home({navigation}) {
 
     const [appointment, setAppointment] = useState(null);
 
-    const api = axios.create({baseURL: 'http://localhost:8080'})
+    const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
 
     useEffect(() => {
         refreshData();
-        nextAppointment();
     });
 
 
-    const nextAppointment = async () => {
+    /*const nextAppointment = async () => {
         try {
             let token = await AsyncStorage.getItem('token');
 
@@ -38,7 +37,7 @@ export default function Home({navigation}) {
         } catch (err) {
             alert(err.response.data.message);
         }
-    }
+    }*/
 
     const refreshData = async () => {
         try {
@@ -59,7 +58,7 @@ export default function Home({navigation}) {
         }
     }
 
-    const appointmentCard = () => {
+    /*const appointmentCard = () => {
         return (
             <View style={estilo.contentContainer}>
                 <Text>Proxima Consulta</Text>
@@ -103,7 +102,7 @@ export default function Home({navigation}) {
                 </View>
             </View>
         )
-    }
+    }*/
 
     const noAppointment = () => {
         return (
@@ -148,7 +147,7 @@ export default function Home({navigation}) {
             <View style={{flex: 1, marginBotton: 15, marginTop: 15}}>
                 <Text style={estilo.texto}>Bem-vindo(a), {user.name}!</Text>
                 <View>
-                    {appointment === null ? noAppointment() : appointmentCard()}
+                    { noAppointment() }
                 </View>
             </View>
         </View>
