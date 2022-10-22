@@ -13,7 +13,8 @@ export default function AgendamentoMedico({navigation, route}) {
     const [timestampList, setTimestampList] = useState([{}])
     const [timestamp, setTimestamp] = useState({});
 
-    const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
+    //const api = axios.create({baseURL: 'https://believe-backend.azurewebsites.net'})
+    const api = axios.create({baseURL: 'http://localhost:8080'})
 
     const marcarConsulta = async (index, value) => {
         try {

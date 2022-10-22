@@ -115,7 +115,8 @@ export default function Consulta({navigation}) {
                                     <Text style={estilo.card.info.text} key={index}>CRM: {obj.doctor.crm}</Text>
                                 </View>
                                 <View>
-                                    <Text style={estilo.card.info.text} key={index}>Especialidade: {obj.doctor.speciality}
+                                    <Text style={estilo.card.info.text}
+                                          key={index}>Especialidade: {obj.doctor.speciality}
                                     </Text>
                                 </View>
                                 <View style={{marginVertical: 5}}>
@@ -137,7 +138,8 @@ export default function Consulta({navigation}) {
                         <View>
                             {
                                 obj.appointmentStatus !== 'CANCELLED'
-                                    ? <Button title="Cancelar" buttonStyle={{backgroundColor: "#ef5858"}} onPress={() => {
+                                    ?
+                                    <Button title="Cancelar" buttonStyle={{backgroundColor: "#ef5858"}} onPress={() => {
                                         cancelAppointment(obj);
                                     }}/>
                                     : <Button title="Cancelar" buttonStyle={{backgroundColor: "grey"}}/>
@@ -150,16 +152,16 @@ export default function Consulta({navigation}) {
     }
 
     const defaultResult = () => {
-        return(
+        return (
             <View>
                 <Text>Não há nada aqui</Text>
             </View>
         )
     }
 
-    return(
+    return (
         <View>
-            { Array.isArray(appointmentList) && appointmentList.length ? resultList() : defaultResult()  }
+            {Array.isArray(appointmentList) && appointmentList.length ? resultList() : defaultResult()}
         </View>
     )
 }

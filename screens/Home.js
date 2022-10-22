@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, Button} from 'react-native';
+import {StyleSheet, Text, View, Button, Image} from 'react-native';
 import styles from '../style/MainStyle';
 import ImageCarousel from '../components/carrosel';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -17,7 +17,8 @@ export default function Home({navigation}) {
 
     useEffect(() => {
         refreshData();
-    }, []);
+        nextAppointment();
+    });
 
 
     const nextAppointment = async () => {
@@ -53,7 +54,6 @@ export default function Home({navigation}) {
             let resp = req.data
 
             setUser(resp);
-            nextAppointment();
         } catch (err) {
             alert(err.response.data.message);
         }
@@ -71,25 +71,26 @@ export default function Home({navigation}) {
 
                         <View style={estilo.card.info.data}>
                             <View style={{marginBottom: 3}}>
-                                <Text style={estilo.card.info.text_code} key={index}>Código: {appointment.code}</Text>
+
+                                <Text style={estilo.card.info.text_code}>Código: {appointment.code}</Text>
                             </View>
                             <View>
-                                <Text style={estilo.card.info.text} key={index}>{appointment.doctor.name}</Text>
+                                <Text style={estilo.card.info.text}>{appointment.doctor.name}</Text>
                             </View>
                             <View>
-                                <Text style={estilo.card.info.text} key={index}>CRM: {appointment.doctor.crm}</Text>
+                                <Text style={estilo.card.info.text}>CRM: {appointment.doctor.crm}</Text>
                             </View>
                             <View>
-                                <Text style={estilo.card.info.text} key={index}>Especialidade: {appointment.doctor.speciality}
+                                <Text style={estilo.card.info.text}>Especialidade: {appointment.doctor.speciality}
                                 </Text>
                             </View>
                             <View style={{marginVertical: 5}}>
-                                <Text style={estilo.card.info.text}
-                                      key={index}>Data: {appointment.startOfAppointment}</Text>
+                                <Text style={estilo.card.info.text}>Data: {appointment.startOfAppointment}</Text>
                             </View>
                         </View>
                         {
-                            getStatus(obj.appointmentStatus)
+                            getStatus(appointment.appointmentStatus)
+
                         }
                     </View>
                     <View style={{
@@ -99,15 +100,6 @@ export default function Home({navigation}) {
                     }}>
                     </View>
 
-                    <View>
-                        {
-                            obj.appointmentStatus !== 'CANCELLED'
-                                ? <Button title="Cancelar" buttonStyle={{backgroundColor: "#ef5858"}} onPress={() => {
-                                    cancelAppointment(obj);
-                                }}/>
-                                : <Button title="Cancelar" buttonStyle={{backgroundColor: "grey"}}/>
-                        }
-                    </View>
                 </View>
             </View>
         )
@@ -115,11 +107,38 @@ export default function Home({navigation}) {
 
     const noAppointment = () => {
         return (
-            <View>
-                <Text>Você ainda não possui nenhum agendamento.</Text>
+            <View style={{justifyContent:'center', flex:'1'}}>
+                <Text style={estilo.card.info.text}>Você ainda não possui nenhum agendamento.</Text>
             </View>
         )
     }
+
+
+    const getStatus = (value) => {
+        let pill;
+        let status;
+        let info;
+
+        switch (value) {
+            case "IN_PROGRESS":
+                pill = {backgroundColor: '#4494ef', borderRadius: 50, padding: 5}
+                info = {color: '#ffffff', fontWeight: 'bold', fontSize: 10}
+                status = "EM ABERTO"
+                break;
+            case "CANCELLED":
+                pill = {backgroundColor: '#ef5858', borderRadius: 50, padding: 5}
+                info = {color: '#ffffff', fontWeight: 'bold', fontSize: 10}
+                status = "CANCELADA"
+                break;
+            default :
+                pill = {backgroundColor: 'grey', borderRadius: 50, padding: 5}
+                info = {color: '#000000', fontWeight: 'bold', fontSize: 10}
+
+                status = "NÃO DEFINIDO"
+                break;
+        }
+    }
+
 
     return (
         <View style={styles.homeContainer}>
@@ -137,17 +156,6 @@ export default function Home({navigation}) {
 }
 
 
-/**
- const estilo = StyleSheet.create({
-    texto: {
-        fontWeight: 'bold',
-        fontSize: 18,
-        marginTop: 10,
-        textAlign: 'center',
-    },
-});
- **/
-
 const estilo = StyleSheet.create({
     contentContainer: {
         paddingHorizontal: 10,
@@ -160,7 +168,7 @@ const estilo = StyleSheet.create({
         marginVertical: 20,
         borderRadius: 10,
         shadowColor: '#171717',
-        shadowOffset: { width: -3, height: 6 },
+        shadowOffset: {width: -3, height: 6},
         shadowOpacity: 0.2,
         shadowRadius: 3,
         padding: 10,
