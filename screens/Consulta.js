@@ -13,7 +13,7 @@ export default function Consulta({navigation}) {
 
     useEffect(() => {
         refreshData();
-    })
+    }, [])
 
     const editar = () => {
         navigation.navigate('Consulta');
@@ -52,6 +52,8 @@ export default function Consulta({navigation}) {
             });
 
             let res = req.data;
+
+            console.log(Object.values(res))
 
             setAppointmentList([...res])
 
@@ -92,67 +94,75 @@ export default function Consulta({navigation}) {
         )
     }
 
-    /** function results() {   **/
-    return appointmentList.map((obj, index) => {
-        return (
-            <View style={estilo.contentContainer}>
-                <View style={estilo.card}>
-                    <View style={estilo.card.info}>
-                        <View style={estilo.card.info.photo}>
-                            <Image style={styles.imagemConsulta} source={require('../assets/BeLive.png')}/>
+    function resultList() {
+        return appointmentList.map((obj, index) => {
+            return (
+                <View style={estilo.contentContainer}>
+                    <View style={estilo.card}>
+                        <View style={estilo.card.info}>
+                            <View style={estilo.card.info.photo}>
+                                <Image style={styles.imagemConsulta} source={require('../assets/BeLive.png')}/>
+                            </View>
+
+                            <View style={estilo.card.info.data}>
+                                <View style={{marginBottom: 3}}>
+                                    <Text style={estilo.card.info.text_code} key={index}>Código: {obj.code}</Text>
+                                </View>
+                                <View>
+                                    <Text style={estilo.card.info.text} key={index}>{obj.doctor.name}</Text>
+                                </View>
+                                <View>
+                                    <Text style={estilo.card.info.text} key={index}>CRM: {obj.doctor.crm}</Text>
+                                </View>
+                                <View>
+                                    <Text style={estilo.card.info.text} key={index}>Especialidade: {obj.doctor.speciality}
+                                    </Text>
+                                </View>
+                                <View style={{marginVertical: 5}}>
+                                    <Text style={estilo.card.info.text}
+                                          key={index}>Data: {obj.startOfAppointment.replaceAll('-', '/')}</Text>
+                                </View>
+                            </View>
+                            {
+                                getStatus(obj.appointmentStatus)
+                            }
+                        </View>
+                        <View style={{
+                            marginVertical: 5,
+                            paddingVertical: 3,
+                            borderRadius: 5
+                        }}>
                         </View>
 
-                        <View style={estilo.card.info.data}>
-                            <View style={{ marginBottom: 3}}>
-                                <Text style={estilo.card.info.text_code} key={index}>Código: {obj.code}</Text>
-                            </View>
-                            <View>
-                                <Text style={estilo.card.info.text} key={index}>{obj.doctor.name}</Text>
-                            </View>
-                            <View>
-                                <Text style={estilo.card.info.text} key={index}>CRM: {obj.doctor.crm}</Text>
-                            </View>
-                            <View>
-                                <Text style={estilo.card.info.text} key={index}>Especialidade: {obj.doctor.speciality}
-                                </Text>
-                            </View>
-                            <View  style={{ marginVertical: 5}}>
-                                <Text style={estilo.card.info.text}  key={index}>Data: {obj.startOfAppointment.replaceAll('-','/')}</Text>
-                            </View>
+                        <View>
+                            {
+                                obj.appointmentStatus !== 'CANCELLED'
+                                    ? <Button title="Cancelar" buttonStyle={{backgroundColor: "#ef5858"}} onPress={() => {
+                                        cancelAppointment(obj);
+                                    }}/>
+                                    : <Button title="Cancelar" buttonStyle={{backgroundColor: "grey"}}/>
+                            }
                         </View>
-                        {
-                            getStatus(obj.appointmentStatus)
-                        }
-                    </View>
-                    <View style={{
-                        marginVertical: 5,
-                        paddingVertical: 3,
-                        borderRadius: 5
-                    }}>
-                    </View>
-
-                    <View>
-                        {
-                            obj.appointmentStatus !== 'CANCELLED'
-                                ? <Button title="Cancelar" buttonStyle={{backgroundColor: "#ef5858"}} onPress={() => {
-                                    cancelAppointment(obj);
-                                }}/>
-                                : <Button title="Cancelar" buttonStyle={{backgroundColor: "grey"}}/>
-                        }
                     </View>
                 </View>
+            )
+        })
+    }
+
+    const defaultResult = () => {
+        return(
+            <View>
+                <Text>Não há nada aqui</Text>
             </View>
         )
-    })
-}
-/**
- return (
- <View style={estilo.contentContainer}>
- {results()}
- </View>
- )
- **/
+    }
 
+    return(
+        <View>
+            { Array.isArray(appointmentList) && appointmentList.length ? resultList() : defaultResult()  }
+        </View>
+    )
+}
 
 const estilo = StyleSheet.create({
     contentContainer: {
